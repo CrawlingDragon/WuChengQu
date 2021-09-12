@@ -38,3 +38,4 @@ app
   .use(createMetaManager)
   .use(metaPlugin)
   .mount("#app");
+// app
