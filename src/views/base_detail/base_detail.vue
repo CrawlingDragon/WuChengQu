@@ -96,11 +96,15 @@
 <script>
 import Header from "@/components/hospital_header/hospital_header";
 import { mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  metaInfo: {
-    title: "基地详情"
+  setup() {
+    useMeta({
+      title: "基地详情"
+    });
   },
+
   name: "baseDetail",
   components: { Header },
   props: {},

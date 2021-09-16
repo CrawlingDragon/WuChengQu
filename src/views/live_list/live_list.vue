@@ -9,11 +9,14 @@
 <script>
 import Header from "@/components/hospital_header/hospital_header";
 import { mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  name: "liveList",
-  metaInfo: {
-    title: "直播节目单"
+  setup() {
+    useMeta({
+      title: "直播节目单"
+    });
   },
+  name: "liveList",
   components: { Header },
   props: {},
   data() {

@@ -13,25 +13,21 @@
       {{ initDis }}
       <van-icon name="arrow-down" class="down" />
     </div>
-    <div class="my-container"></div>
-    <van-popup
-      v-model="show"
-      :get-container="getContainer"
-      class="pop"
-      :overlay="false"
-      closeable
-    >
-      <div class="list">
-        <div
-          class="item"
-          v-for="item in kindList"
-          :key="item.catid"
-          @click="changeDis(item)"
-        >
-          {{ item.catname }}
+    <div class="my-container">
+      <van-popup v-model:show="show" class="pop" :overlay="false" closeable>
+        <div class="list">
+          <div
+            class="item"
+            v-for="item in kindList"
+            :key="item.catid"
+            @click="changeDis(item)"
+          >
+            {{ item.catname }}
+          </div>
         </div>
-      </div>
-    </van-popup>
+      </van-popup>
+    </div>
+
     <ul class="diseases-ul">
       <van-list
         v-model="loading"
@@ -51,12 +47,16 @@
 </template>
 <script>
 import Header from "@/components/hospital_header/hospital_header";
+// import type { PopupPosition, PopupCloseIconPosition } from "vant";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
   name: "diseases",
   components: { Header },
-  metaInfo: {
-    title: "病虫害库"
+  setup() {
+    useMeta({
+      title: "病虫害库"
+    });
   },
   props: {},
   data() {
@@ -149,31 +149,12 @@ export default {
   & > .title
     position fixed
     left 12px
-    color #155BBB
+    color $theme-color
     z-index 5
     width 200px
     top 10px
     &.lessIndex
       z-index 3
-  .pop
-    width 100%
-    height 200px
-    top 141px
-    padding 15px
-    .list
-      margin-bottom 15px
-      color #333333
-      font-size 15px
-      & > .item
-        padding 5px 9px
-        display inline-block
-        background #F6F6F6
-        border-radius 4px
-        margin-right 15px
-        margin-bottom 10px
-      &.list2
-        & > .item
-          padding 5px 15px
   .diseases-ul
     padding-left 12px
     font-size 0
@@ -198,4 +179,23 @@ export default {
           text-overflow ellipsis
           white-space nowrap
           background #fff
+/deep/.pop
+  width 100%
+  height auto
+  top 116px
+  padding 15px 15px 0
+  .list
+    margin-bottom 15px
+    color #333333
+    font-size 15px
+    & > .item
+      padding 5px 9px
+      display inline-block
+      background #F6F6F6
+      border-radius 4px
+      margin-right 15px
+      margin-bottom 10px
+    &.list2
+      & > .item
+        padding 5px 15px
 </style>

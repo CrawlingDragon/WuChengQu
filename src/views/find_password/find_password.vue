@@ -69,11 +69,15 @@
 <script>
 import Header from "@/components/header/header";
 import { mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  metaInfo: {
-    title: "找回密码"
+  setup() {
+    useMeta({
+      title: "找回密码"
+    });
   },
+
   name: "findPassword",
   components: { Header },
   props: {},

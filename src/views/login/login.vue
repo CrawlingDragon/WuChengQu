@@ -1,14 +1,21 @@
 <template>
   <div class="login-container">
     <Header :indexHeader="false"></Header>
-    <div class="title-bar">账号密码登录<span @click="goToSign">注册</span></div>
+
+    <div class="title-bar">
+      账号密码登录<router-link to="/sign" class="sign">注册</router-link>
+    </div>
     <van-form @submit="onSubmit" class="from">
       <van-field
         v-model="username"
         type="text"
         name="phone"
         placeholder="请输入手机号"
-        :rules="[{ validator: validatorPhone }, { required: true }]"
+        autofocus="autofocus"
+        :rules="[
+          { validator: validatorPhone, message: '手机格式正确' },
+          { required: true }
+        ]"
       />
       <van-field
         v-model="password"
@@ -17,49 +24,53 @@
         placeholder="请输入密码"
         :rules="[{ required: true }]"
       />
-      <div class="forget" @click="goToForget">忘记密码？</div>
-      <div style="margin: 16px;margin-top:45px">
+      <router-link class="forget" to="/find_password">忘记密码？</router-link>
+      <Deal v-model:checked="checked"></Deal>
+      <div style="margin: 16px;">
         <van-button
           round
           block
           type="info"
           native-type="submit"
           class="sub"
-          :class="{ success: this.username && this.password }"
+          :class="{ success: username && password && clickTrue && checked }"
         >
           登录
         </van-button>
       </div>
     </van-form>
-    <div class="message-login" @click="goTo_M_Login">短信快捷登录</div>
+    <router-link class="message-login" to="m_login">短信快捷登录></router-link>
   </div>
 </template>
 <script>
 import Header from "@/components/header/header";
-import { mapMutations } from "vuex";
+import Deal from "@/components/base/deal/deal.vue";
+import { useMeta } from "vue-meta";
+import { mapMutations, mapState, mapActions } from "vuex";
 export default {
-  metaInfo: {
-    title: "登录"
+  setup() {
+    useMeta({ title: "登录" });
   },
   name: "Login",
-  components: { Header },
+  components: { Header, Deal },
   props: {},
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      checked: false
     };
   },
   created() {},
-  computed: {},
-  watch: {},
-  mounted() {
-    // console.log("this.axios :>> ", this.$axios);
-    // document.cookie = 'ucenter_uid=123123123123123'
+  computed: {
+    ...mapState(["token"])
   },
+  watch: {},
+  mounted() {},
   unmounted() {},
   methods: {
     ...mapMutations(["setUid", "setIsMember", "setLogined"]),
+    ...mapActions(["saveUserInfo"]),
     validatorPhone(val) {
       // 验证手机号码
       if (/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
@@ -70,62 +81,27 @@ export default {
       return /^1(3|4|5|6|7|8|9)\d{9}$/.test(val);
     },
     onSubmit() {
-      // console.log("submit", values);
+      if (!this.checked) {
+        this.$toast("必须先同意用户协议和隐私政策");
+        return;
+      }
       this.$axios
-        .fetchPost("Mobile/Member/login", {
+        .fetchPost("Mobile/Login/login", {
           username: this.username,
           password: this.password
         })
         .then(res => {
-          this.$toast(res.data.message);
-          if (res.data.code == 0) {
-            this.setUid(res.data.data.uid);
-            for (let i = 0; i < res.data.data.msg.length; i++) {
-              this.createScript(res.data.data.msg[i]);
-            }
-            this.setLogined(1);
+          const data = res.data;
+          if (data.code == 0) {
+            this.saveUserInfo(data.data);
             setTimeout(() => {
               this.$router.push({
                 path: "/index"
               });
             }, 500);
           }
+          this.$toast(data.message);
         });
-    },
-    getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    },
-    createScript(src) {
-      let js = document.createElement("script");
-      js.setAttribute("type", "text/javascript");
-      js.src = src;
-      document.getElementsByTagName("head")[0].appendChild(js);
-    },
-    goTo_M_Login() {
-      this.$router.push({
-        path: "/m_login"
-      });
-    },
-    goToSign() {
-      this.$router.push({
-        path: "/sign"
-      });
-    },
-    goToForget() {
-      this.$router.push({
-        path: "/find_password"
-      });
     }
   }
 };
@@ -140,12 +116,14 @@ export default {
   right 0
   .title-bar
     font-size 24px
-    color #333333
+    color #333
     text-align center
     margin 80px 0 40px
-    span
+    .sign
       font-size 15px
+      display inline
       margin-left 19px
+      color #333
   .from
     width 80%
     margin 0 auto
@@ -159,8 +137,9 @@ export default {
   .forget
     text-align right
     font-size 12px
-    color #999999
+    color $theme-color
     margin-top 20px
+    margin-bottom 30px
   .message-login
     color #FF6600
     text-align center

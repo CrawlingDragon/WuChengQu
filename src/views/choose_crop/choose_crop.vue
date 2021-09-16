@@ -52,12 +52,15 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  name: "chooseCrop",
-  metaInfo: {
-    title: "搜索作物"
+  setup() {
+    useMeta({
+      title: "搜索作物"
+    });
   },
+  name: "chooseCrop",
   components: {},
   props: {},
   data() {
@@ -208,6 +211,6 @@ export default {
       height 300px
       line-height 300px
       text-align center
-      span
-        color #155BBB
+      .other
+        color $theme-color
 </style>

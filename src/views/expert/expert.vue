@@ -88,7 +88,7 @@
       v-model="active"
       sticky
       class="tabs"
-      color="#155BBB"
+      color="#599524"
       :offset-top="num"
       :class="{ aiTab: id == aiExpertId }"
       @scroll="scroll"
@@ -128,8 +128,8 @@
         </ul>
       </van-tab>
       <van-tab sticky v-if="id != aiExpertId">
-        <template #title> 加入的医院 {{ expertData.join }} </template>
-        <van-empty description="暂未加入医院" v-if="noData3" />
+        <template #title> 加入的中心 {{ expertData.join }} </template>
+        <van-empty description="暂未加入中心" v-if="noData3" />
         <ul class="hospital-ul" v-show="id != aiExpertId" v-else>
           <van-list
             v-model="loading3"
@@ -154,11 +154,12 @@ import OnlineItem from "@/components/online_item/online_item";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
 import { ImagePreview } from "vant";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  metaInfo() {
-    return {
-      title: this.expertData.name + (this.identity == 1 ? "专家" : "")
-    };
+  setup() {
+    useMeta({
+      title: "专家"
+    });
   },
   name: "expert",
   components: {
@@ -414,10 +415,11 @@ export default {
   .person-box
     margin-top 10px
     min-height 232px
-    background url('./bj.png') no-repeat
+    // background url('./bj.png') no-repeat
     background-position center center
     background-size cover
     padding 40px 12px 20px
+    color #333
     .name-bar
       position relative
       padding-left 80px
@@ -431,22 +433,22 @@ export default {
         border-radius 5px
         overflow hidden
       .name
-        color #FFFFFF
+        color #333
         font-size 20px
         margin-bottom 10px
         span
           font-size 12px
-          color #fff
+
           margin-left 10px
       .p1
         font-size 12px
-        color #fff
+
         overflow hidden
         text-overflow ellipsis
         white-space nowrap
       .name-bar-crop
         font-size 12px
-        color #fff
+        color #333
   .btns
     padding-left 80px
     font-size 0
@@ -463,8 +465,8 @@ export default {
       justify-content center
       margin-right 22px
     .btn-look
-      border 2px solid #fff
-      color #fff
+      border 2px solid $theme-color
+      color $theme-color
       .plus
         margin-right 4px
         font-size 15px
@@ -475,9 +477,8 @@ export default {
         margin-right 4px
         font-size 15px
     .edit
-      color #fff
-      border 2px solid #fff
-      color #fff
+      color $theme-color
+      border 2px solid $theme-color
   .fans
     margin-top 34px
     display flex
@@ -487,9 +488,9 @@ export default {
       flex 1
       height 27px
       line-height 27px
-      border-right 1px solid #E5E5E5
+      border-right 1px solid  #333
       font-size 14px
-      color #fff
+      color #333
       &:last-child
         border none
   .person-info
@@ -505,7 +506,7 @@ export default {
       border-bottom 1px solid #e5e5e5
       position relative
       .look-more
-        color #165CBB
+        color $theme-color
         position absolute
         right 15px
         top 0
@@ -531,7 +532,7 @@ export default {
     /deep/.van-tabs__wrap
       border-bottom 1px solid #e5e5e5
     /deep/.van-tab--active
-      color #155BBB
+      color $theme-color
     .answer-ul
       padding 0 12px
       li

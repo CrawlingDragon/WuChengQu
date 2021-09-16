@@ -31,10 +31,14 @@ import HospitalHeader from "@/components/hospital_header/hospital_header";
 import MessageItem from "@/components/message_item/message_item";
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
+import { useMeta } from "vue-meta";
 export default {
-  metaInfo: {
-    title: "资讯列表"
+  setup() {
+    useMeta({
+      title: "资讯列表"
+    });
   },
+
   name: "message",
   components: { Header, MessageItem, HospitalHeader, Foot },
   props: {},

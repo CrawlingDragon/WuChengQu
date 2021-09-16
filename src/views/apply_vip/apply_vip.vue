@@ -98,7 +98,7 @@
         </van-button>
       </div>
     </van-form>
-    <div class="bottom-title">申请加入新型庄稼医院，享受会员服务</div>
+    <div class="bottom-title">申请加入运营中心，享受会员服务</div>
     <router-view @getCrop="choosedCrop"></router-view>
   </div>
 </template>
@@ -106,11 +106,14 @@
 import Header from "@/components/hospital_header/hospital_header";
 import areaList from "@/common/js/area";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
   name: "applyVip",
   components: { Header },
-  metaInfo: {
-    title: "申请会员"
+  setup() {
+    useMeta({
+      title: "申请会员"
+    });
   },
   props: {},
   data() {
@@ -470,10 +473,10 @@ export default {
     display flex
     align-items center
     justify-content center
-    color #155BBA
+    color $theme-color
     font-size 12px
     border-radius 4px
-    border 1px solid #155BBB
+    border 1px solid $theme-color
     span
       margin-right 10px
   .bottom-title

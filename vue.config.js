@@ -1,4 +1,13 @@
 module.exports = {
+  transpileDependencies: ["vue-meta"],
+  css: {
+    loaderOptions: {
+      // 给 stylus-loader 传递选项
+      stylus: {
+        import: "~@/common/css/base.styl"
+      }
+    }
+  },
   publicPath: "./",
   filenameHashing: true,
   configureWebpack: {

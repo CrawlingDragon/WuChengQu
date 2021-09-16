@@ -5,7 +5,9 @@
       <div class="left">
         {{ list.subtime }} {{ list.apm }} 第{{ list.position }}号
       </div>
-      <div class="right">{{ list.status }}</div>
+      <div class="right" :class="{ waitLook: list.status == '待就诊' }">
+        {{ list.status }}
+      </div>
     </div>
     <div class="mid">
       <van-image
@@ -57,8 +59,10 @@ export default {
       font-size 12px
       color #999999
     .right
-      color #155BBB
+      color #999
       font-size 12px
+    .waitLook
+      color $theme-color
 .mid
   padding 15px 0
   display flex

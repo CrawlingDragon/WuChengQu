@@ -9,19 +9,23 @@
     <div class="title" v-show="!noData && initShow">
       已加入{{ total }}家医院
     </div>
-    <van-empty description="您还没有加入过医院" v-if="noData"></van-empty>
+    <van-empty description="您还没有加入过中心" v-if="noData"></van-empty>
   </div>
 </template>
 <script>
 import Header from "@/components/header/header";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "我加入的医院"
+    });
+  },
   name: "meHospital",
   components: { Header, RecommendHospital },
-  metaInfo: {
-    title: "我加入的医院"
-  },
+
   props: {},
   data() {
     return {

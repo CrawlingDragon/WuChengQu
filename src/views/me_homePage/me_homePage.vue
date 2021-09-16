@@ -63,7 +63,7 @@
         </ul>
       </van-tab>
       <van-tab sticky>
-        <template #title> 加入的医院 {{ expertData.join }} </template>
+        <template #title> 加入的中心 {{ expertData.join }} </template>
         <ul class="hospital-ul">
           <li v-for="item in hospitalList" :key="item.id">
             <RecommendHospital :list="item"></RecommendHospital>
@@ -79,11 +79,12 @@ import OnlineItem from "@/components/online_item/online_item";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
 import { ImagePreview } from "vant";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  metaInfo() {
-    return {
+  setup() {
+    useMeta({
       title: "个人主页"
-    };
+    });
   },
   name: "meHomePage",
   components: {
@@ -234,7 +235,6 @@ export default {
   .person-box
     margin-top 10px
     min-height 232px
-    background url('./bj.png') no-repeat
     background-position center center
     background-size cover
     padding 40px 12px 20px
@@ -251,16 +251,16 @@ export default {
         border-radius 5px
         overflow hidden
       .name
-        color #FFFFFF
+        color #333
         font-size 20px
         margin-bottom 10px
         span
           font-size 12px
-          color #fff
+          color #333
           margin-left 10px
       .p1
         font-size 12px
-        color #fff
+        color #333
         overflow hidden
         text-overflow ellipsis
         white-space nowrap
@@ -281,7 +281,7 @@ export default {
       margin-right 22px
     .btn-look
       border 2px solid #fff
-      color #fff
+      color $theme-color
       .plus
         margin-right 4px
         font-size 15px
@@ -292,9 +292,8 @@ export default {
         margin-right 4px
         font-size 15px
     .edit
-      color #fff
-      border 2px solid #fff
-      color #fff
+      color $theme-color
+      border 2px solid $theme-color
   .fans
     margin-top 34px
     display flex
@@ -304,9 +303,9 @@ export default {
       flex 1
       height 27px
       line-height 27px
-      border-right 1px solid #E5E5E5
+      border-right 1px solid #333
       font-size 14px
-      color #fff
+      color #333
       &:last-child
         border none
   .person-info

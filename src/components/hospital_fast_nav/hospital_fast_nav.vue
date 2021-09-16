@@ -2,7 +2,7 @@
   <div class="hospital_fast_nav-container" v-show="showFlag">
     <div class="wrap">
       <div class="top">
-        <div class="kind">医院导航</div>
+        <div class="kind">中心导航</div>
         <van-icon name="cross" class="cross" @click="closeNav" />
       </div>
       <div class="nav-box">
@@ -48,10 +48,10 @@
         v-if="hospitalIsStore == 1 && hospitalIsMember == 0"
         @click="goToApply"
       >
-        申请加入医院
+        申请加入中心
         <span class="free">免费</span>
       </div>
-      <div class="joined" v-if="joinTime">{{ joinTime }} 加入医院成为会员</div>
+      <div class="joined" v-if="joinTime">{{ joinTime }} 加入中心成为会员</div>
       <div class="know-vip" @click="goToVip" v-show="hospitalIsStore == 1">
         了解更多会员权益 >
       </div>
@@ -382,7 +382,7 @@ export default {
       font-size 12px
       line-height 12px
   .know-vip
-    color #155BBB
+    color $theme-color
     font-size 12px
     margin 20px 0
     text-align center

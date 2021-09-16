@@ -51,14 +51,17 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({
+      title: "优质基地"
+    });
+  },
   name: "wholeBaseList",
   components: { Header },
   props: {},
-  metaInfo: {
-    title: "优质基地"
-  },
   data() {
     return {
       list: [],

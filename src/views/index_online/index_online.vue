@@ -22,8 +22,8 @@
             <div class="item" @click="chooseAddress(9999, '全部地区')">
               全部地区
             </div>
-            <div class="item" @click="chooseAddress(1111, '绍兴市')">
-              绍兴市
+            <div class="item" @click="chooseAddress(1111, '婺城区')">
+              婺城区
             </div>
             <van-icon name="cross" class="cross" @click="addressFlag = false" />
           </div>
@@ -63,11 +63,14 @@ import OnlineItem from "@/components/online_item/online_item";
 import { ImagePreview } from "vant";
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
+import { useMeta } from "vue-meta";
 export default {
-  name: "indexOnline",
-  metaInfo: {
-    title: "网诊"
+  setup() {
+    useMeta({
+      title: "网诊"
+    });
   },
+  name: "indexOnline",
   components: {
     Header,
     OnlineItem,

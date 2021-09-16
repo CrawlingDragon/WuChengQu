@@ -23,12 +23,16 @@
 </template>
 <script>
 import Header from "@/components/header/header";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "培训视频"
+    });
+  },
   name: "videoList",
   components: { Header },
-  metaInfo: {
-    title: "培训视频"
-  },
+
   props: {},
   data() {
     return {

@@ -19,12 +19,13 @@
 import Header from "@/components/header/header";
 import RecommendExpert from "@/components/recommend_expert/recommend_expert";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  metaInfo() {
-    return {
+  setup() {
+    useMeta({
       title: "专家"
-    };
+    });
   },
   name: "lookExpert",
   components: { Header, RecommendExpert },

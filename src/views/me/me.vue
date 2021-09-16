@@ -18,7 +18,7 @@
       <div class="right" @click.stop="goToEdit">编辑 ></div>
     </div>
     <div class="my-ul">
-      <van-cell title="加入的医院" to="/me_hospital" is-link>
+      <van-cell title="加入的中心" to="/me_hospital" is-link>
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <template #icon>
           <div class="icon01"></div>
@@ -58,7 +58,24 @@
           <div class="icon06"></div>
         </template>
       </van-cell>
+      <van-cell title="农事记录" to="/solution" is-link>
+        <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+        <template #icon>
+          <div class="icon11"></div>
+        </template>
+      </van-cell>
     </div>
+    <van-cell
+      title="邀请专家"
+      :to="{ path: '/invite_expert' }"
+      is-link
+      style="margin-top:10px"
+    >
+      <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+      <template #icon>
+        <div class="icon07"></div>
+      </template>
+    </van-cell>
     <van-cell
       title="个人主页"
       :to="{ path: '/expert', query: { from: 'my', id: uid } }"
@@ -81,6 +98,7 @@
       is-link
       style="margin-top:10px"
       @click="callPhone"
+      v-if="false"
     >
       <!-- 使用 right-icon 插槽来自定义右侧图标 -->
       <template #icon>
@@ -95,9 +113,14 @@
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "我的"
+    });
+  },
   name: "me",
-  metaInfo: { title: "我的" },
   components: { Header, Foot },
   props: {},
   data() {
@@ -173,7 +196,7 @@ export default {
         color #999
         font-size 12px
     .right
-      color #155BBB
+      color $theme-color
       font-size 14px
       padding 0 12px 0 12px
   .my-ul
@@ -237,6 +260,13 @@ export default {
   width 18px
   height 18px
   background url('./67.png') no-repeat
+  background-size 100%
+  background-position center
+  margin-right 10px
+.icon11
+  width 18px
+  height 18px
+  background url('./11.png') no-repeat
   background-size 100%
   background-position center
   margin-right 10px

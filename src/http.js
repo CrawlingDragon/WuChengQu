@@ -1,18 +1,16 @@
 import axios from "axios";
 import QS from "qs";
-
+const ERR_OK = 0;
 axios.defaults.timeout = 8000;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=utf-8";
-axios.defaults.baseURL = process.env.VUE_APP_API
 //配置接口地址
-// console.log(axios.defaults.baseURL);
+axios.defaults.baseURL = process.env.VUE_APP_API;
 
 //post 传参序列化，（添加请求拦截器）
 axios.interceptors.request.use(
   config => {
     //在发送请求之前做什么事
-
     if (config.url === "/Mobile/Wen/OssUploadFile") {
       return config;
     }
@@ -78,6 +76,26 @@ export function fetchGet(url, params) {
       });
   });
 }
+
+export function get(url, params) {
+  return axios
+    .get(url, { params })
+    .then(res => {
+      let serverData = res.data;
+      if (serverData.code === ERR_OK) {
+        return serverData.data;
+      } else {
+        return {
+          code: serverData.code,
+          message: serverData.message
+        };
+      }
+    })
+    .catch(e => {
+      console.log("axios错误:", e);
+    });
+}
+
 export default {
   fetchPost,
   fetchGet

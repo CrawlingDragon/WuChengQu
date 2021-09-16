@@ -14,10 +14,10 @@
       </van-swipe>
     </div>
     <div class="nav-box">
-      <div class="item" @click="goToAnswer">
-        <div class="icon i1"></div>
+      <router-link to="/index_online" class="item">
+        <div class="icon i5"></div>
         <p>找答案</p>
-      </div>
+      </router-link>
       <div class="item">
         <a
           :href="shareStoreUrl"
@@ -28,22 +28,19 @@
           <p>找农资</p>
         </a>
       </div>
-      <div class="item" @click="goToExpert">
-        <div class="icon i3"></div>
-        <p>找专家</p>
-      </div>
-      <div class="item" @click="goToBase">
-        <div class="icon i4"></div>
-        <p>找基地</p>
-      </div>
-      <div class="item" @click="goToLive">
+
+      <router-link to="/into_hospital" class="item">
         <div class="icon i5"></div>
-        <p>看直播</p>
-      </div>
+        <p>找中心</p>
+      </router-link>
+      <router-link to="/ask" class="item">
+        <div class="icon i5"></div>
+        <p>提问</p>
+      </router-link>
     </div>
     <div class="hospital-box">
       <div class="title">
-        推荐医院<span>加入新型庄稼医院，免费享受会员服务</span>
+        推荐中心<span>加入数字乡村运营中心，免费享受会员服务</span>
       </div>
       <ul class="h-ul">
         <li v-for="item in hospitalArr" :key="item.id">
@@ -51,19 +48,7 @@
         </li>
       </ul>
     </div>
-    <div class="look-bar" @click="lookMoreHospital">找医院 ></div>
-    <div class="vip-box" @click="goToVip">
-      <img src="./49.png" alt="" />
-    </div>
-    <div class="online-box">
-      <div class="title">推荐专家</div>
-      <ul class="e-ul">
-        <li v-for="item in expertArr" :key="item.id">
-          <RecommendExpert :list="item"></RecommendExpert>
-        </li>
-      </ul>
-    </div>
-    <div class="look-bar" @click="goToExpert">找专家 ></div>
+    <div class="look-bar" @click="lookMoreHospital">找中心 ></div>
     <div class="online-box">
       <div class="title">网诊</div>
       <ul class="o-ul">
@@ -79,21 +64,23 @@
 <script>
 import Header from "@/components/header/header.vue";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
-import RecommendExpert from "@/components/recommend_expert/recommend_expert";
 import OnlineItem from "@/components/online_item/online_item";
 import { ImagePreview } from "vant";
-import { mapMutations, mapState } from "vuex";
+import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
+import { useMeta } from "vue-meta";
+
 export default {
-  metaInfo: {
-    title: "绍兴市为农服务平台"
+  setup() {
+    useMeta({
+      title: "为农服务平台"
+    });
   },
   name: "index",
   components: {
     Header,
     RecommendHospital,
     OnlineItem,
-    RecommendExpert,
     Foot,
     [ImagePreview.Component.name]: ImagePreview.Component
   },
@@ -111,18 +98,12 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["initMid"])
+    ...mapState(["initMid", "token"])
   },
-  watch: {
-    $route() {
-      this.$refs.index.scrollTo(0, 0);
-      this.setMid(this.initMid);
-    }
-  },
+  watch: {},
   mounted() {
     this.initSwiperHeight();
     this.getIndexData();
-    this.setMid(this.initMid);
     window.addEventListener("resize", this.initSwiperHeight);
   },
   // unmounted() { window.removeEventListener('scroll', this.scrollHandler)},
@@ -159,11 +140,13 @@ export default {
         }
       });
     },
-    ...mapMutations(["setMid"]),
     getIndexData() {
       // 获取首页数据
       this.$axios
-        .fetchPost("/Mobile/Index/index", { mId: this.initMid })
+        .fetchPost("/Mobile/Index/index", {
+          mId: this.initMid,
+          token: this.token
+        })
         .then(res => {
           if (res.data.code == 0) {
             this.swiperArr = res.data.data.list_ad;
@@ -171,7 +154,6 @@ export default {
             this.expertArr = res.data.data.list_expert;
             this.onlineArr = res.data.data.list_wen;
             this.scrollInit = true;
-            this.setMid(this.initMid);
           }
         });
     },
@@ -191,14 +173,14 @@ export default {
       //  去首页的的网诊
       this.$router.push({ path: "/index_online" }).catch(err => err);
     },
-    goToExpert() {
-      // 找专家
-      this.$router.push({ path: "/look_expert" }).catch(err => err);
-    },
-    goToBase() {
-      // 找基地
-      this.$router.push({ path: "/whole_base_list" }).catch(err => err);
-    },
+    // goToExpert() {
+    //   // 找专家
+    //   this.$router.push({ path: "/look_expert" }).catch(err => err);
+    // },
+    // goToBase() {
+    //   // 找基地
+    //   this.$router.push({ path: "/whole_base_list" }).catch(err => err);
+    // },
     lookMoreHospital() {
       // 查找更多的医院
       this.$router.push({ path: "/into_hospital" }).catch(err => err);
@@ -257,6 +239,8 @@ export default {
         &.i5
           background url('./5.png') no-repeat center
           background-size cover
+      p
+        color #333333
   .hospital-box
     background #fff
     .title
@@ -287,7 +271,7 @@ export default {
   .look-bar
     height 40px
     text-align center
-    color #165CBC
+    color $theme-color
     font-size 12px
     line-height 40px
     background #fff

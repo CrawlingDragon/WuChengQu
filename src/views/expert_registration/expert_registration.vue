@@ -80,13 +80,16 @@
 import Header from "@/components/hospital_header/hospital_header";
 import { mapState } from "vuex";
 import { Dialog } from "vant";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "专家挂号"
+    });
+  },
   name: "expertRegistration",
   components: { Header, [Dialog.Component.name]: Dialog.Component },
   props: {},
-  metaInfo: {
-    title: "专家挂号"
-  },
   data() {
     return {
       list: []
@@ -247,9 +250,9 @@ export default {
         font-size 12px
         color #999
         .number
-          color #155BBB
+          color $theme-color
           padding 9px 12px
-          border 1px solid #155BBB
+          border 1px solid $theme-color
           border-radius 4px
           display inline-block
           line-height 12px

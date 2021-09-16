@@ -47,11 +47,14 @@
 <script>
 import Header from "@/components/header/header";
 import OnlineItem from "@/components/online_item/online_item";
+import { useMeta } from "vue-meta";
 export default {
-  name: "searchOnline",
-  metaInfo: {
-    title: "搜索网诊"
+  setup() {
+    useMeta({
+      title: "搜索网诊"
+    });
   },
+  name: "searchOnline",
   components: { Header, OnlineItem },
   props: {},
   data() {

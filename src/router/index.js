@@ -1,7 +1,4 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Login from "../views/login/login.vue";
-import MLogin from "../views/m_login/m_login.vue";
-// import store from "@/store/index";
 
 const routes = [
   {
@@ -24,12 +21,14 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: () =>
+      import(/* webpackChunkName:'login' */ "@/views/login/login.vue")
   },
   {
     path: "/m_login",
     name: "mLogin",
-    component: MLogin
+    component: () =>
+      import(/* webpackChunkName:'m_login' */ "@/views/m_login/m_login.vue")
   },
   {
     path: "/sign",
@@ -409,17 +408,24 @@ const routes = [
         /*webpackChunkName:"diseases_detail" */ "@/views/diseases_detail/diseases_detail"
       )
   },
-  {
-    path: "/about_us",
-    name: "aboutUs",
-    component: () =>
-      import(/*webpackChunkName:"about_us" */ "@/views/about_us/about_us")
-  },
+  // {
+  //   path: "/about_us",
+  //   name: "aboutUs",
+  //   component: () =>
+  //     import(/*webpackChunkName:"about_us" */ "@/views/about_us/about_us")
+  // },
   {
     path: "/video_list",
     name: "videoList",
     component: () =>
       import(/*webpackChunkName:"video_list" */ "@/views/video_list/video_list")
+  },
+  {
+    path: "/invite_expert",
+    component: () =>
+      import(
+        /*webpackChunkName:"invite_expert" */ "@/views/invite_expert/invite_expert"
+      )
   },
   {
     path: "/video_detail",
@@ -428,6 +434,57 @@ const routes = [
       import(
         /*webpackChunkName:"video_detail" */ "@/views/video_detail/video_detail"
       )
+  },
+  {
+    path: "/base_center",
+    name: "base_center",
+    component: () =>
+      import(
+        /*webpackChunkName:"base_center" */ "@/views/base_center/base_center"
+      ),
+    children: [
+      {
+        path: "/",
+        redirect: "/center"
+      },
+      {
+        path: "/center",
+        component: () =>
+          import(
+            /* webpackChunkName:"center" */ "@/views/base_center/center/center"
+          )
+      },
+      {
+        path: "/baseInfoEdit",
+        name: "baseEdit",
+        component: () =>
+          import(
+            /* webpackChunkName:"baseEdit" */ "@/views/base_center/base_info_edit/base_info_edit"
+          )
+      },
+      {
+        path: "/cropManagement",
+        name: "cropManagement",
+        component: () =>
+          import(
+            /* webpackChunkName:"cropManagement" */ "@/views/base_center/crop_management/crop_management"
+          )
+      },
+      {
+        path: "/cropRecord",
+        name: "cropRecord",
+        component: () =>
+          import(
+            /* webpackChunkName:"cropRecord" */ "@/views/base_center/crop_record/crop_record"
+          )
+      }
+    ]
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not_found",
+    component: () =>
+      import(/* webpackChunkName:"not-found" */ "@/views/not_found/not_found")
   }
 ];
 

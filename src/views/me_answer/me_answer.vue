@@ -4,8 +4,8 @@
     <van-tabs
       v-model="active"
       sticky
-      color="#155BBB"
-      title-active-color="#155BBB"
+      color="#599524"
+      title-active-color="#599524"
       class="tabs"
       :offset-top="num"
       @scroll="scroll"
@@ -65,13 +65,16 @@
 import Header from "@/components/header/header";
 import OnlineItem from "@/components/online_item/online_item";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 var Before_scollH = 0;
 export default {
+  setup() {
+    useMeta({
+      title: "问答管理"
+    });
+  },
   name: "meAnswer",
   components: { Header, OnlineItem },
-  metaInfo: {
-    title: "问答管理"
-  },
   props: {},
   data() {
     return {

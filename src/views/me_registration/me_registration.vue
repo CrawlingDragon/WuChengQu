@@ -16,14 +16,18 @@
 import Header from "@/components/header/header";
 import RegistrationItem from "@/components/register_item/register_item";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({
+      title: "挂号记录"
+    });
+  },
   name: "meRegistration",
   components: { Header, RegistrationItem },
   props: {},
-  metaInfo: {
-    title: "挂号记录"
-  },
+
   data() {
     return {
       list: [],

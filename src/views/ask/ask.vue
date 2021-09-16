@@ -64,13 +64,14 @@ import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
 import EXIF from "exif-js";
 import Loacl from "@/components/local/local";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({ title: "提问" });
+  },
   name: "ask",
   components: { Header, Foot, HospitalHeader, Loacl },
   props: {},
-  metaInfo: {
-    title: "提问"
-  },
   data() {
     return {
       address: "定位中···",
@@ -116,7 +117,7 @@ export default {
       } else if (
         this.localRef.text == "定位中···" &&
         this.ismember == 0 &&
-        this.isShaoxing != "绍兴市"
+        this.isShaoxing != "婺城区"
       ) {
         this.$toast("地址定位中,请稍等");
         return;
@@ -403,10 +404,11 @@ export default {
       .btn
         margin-right 12px
         border-radius 4px
-        background #155BBB
+        background $theme-color
         font-size 15px
         color #fff
         width 100%
+        border none
 /deep/.van-field__control
   font-size 14px
 </style>

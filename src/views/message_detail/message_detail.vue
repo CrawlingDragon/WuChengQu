@@ -16,12 +16,15 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "资讯详情"
+    });
+  },
   name: "messageDetail",
   components: { Header },
-  metaInfo: {
-    title: "资讯详情"
-  },
   props: {},
   created() {},
   data() {
@@ -92,6 +95,6 @@ export default {
         color #999999
         font-size 12px
       .right
-        color #155BBB
+        color $theme-color
         font-size 12px
 </style>

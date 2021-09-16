@@ -41,24 +41,39 @@
         maxlength="20"
         :rules="[{ required: true }]"
       />
-      <div style="margin: 16px;margin-top:45px">
-        <van-button round block type="info" native-type="submit">
+      <div style="margin-top:30px;margin-left:16px">
+        <Deal v-model:checked="checked"></Deal>
+      </div>
+      <div style="margin: 16px;">
+        <van-button
+          round
+          block
+          type="info"
+          native-type="submit"
+          class="sub"
+          :class="{ success: checked && password && username && sms }"
+        >
           注册
         </van-button>
       </div>
     </van-form>
-    <div class="go-login" @click="goToLogin">已有益农宝账号，去登录</div>
+    <router-link class="go-login" to="/login"
+      >已有益农宝账号，去登录</router-link
+    >
   </div>
 </template>
 <script>
 import Header from "@/components/header/header";
-import { mapMutations } from "vuex";
-
+import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
+import Deal from "@/components/base/deal/deal.vue";
 export default {
   name: "sign",
-  components: { Header },
-  metaInfo: {
-    title: "注册"
+  components: { Header, Deal },
+  setup() {
+    useMeta({
+      title: "注册"
+    });
   },
   props: {},
   data() {
@@ -67,7 +82,8 @@ export default {
       clickTrue: false,
       username: "",
       sms: "",
-      password: ""
+      password: "",
+      checked: false
     };
   },
   created() {},
@@ -75,7 +91,7 @@ export default {
   watch: {},
   mounted() {},
   methods: {
-    ...mapMutations(["setUid"]),
+    ...mapActions(["saveUserInfo"]),
     validatorPhone(val) {
       // 验证手机号码
       if (/^1(3|4|5|6|7|8|9)\d{9}$/.test(val)) {
@@ -91,18 +107,24 @@ export default {
       this.clickTrue = true;
     },
     onSubmit2() {
-      // console.log("val :>> ", val);
+      if (!this.checked) {
+        this.$toast("必须先同意用户协议和隐私政策");
+        return;
+      }
       this.signFn(this.username, this.password, this.sms);
     },
     signFn(username, password, code) {
       this.$axios
-        .fetchPost("Mobile/Member/register", { username, password, code })
+        .fetchPost("Mobile/Login/register", { username, password, code })
         .then(res => {
-          if (res.data.code == 0) {
-            this.$router.push({ path: "/index" });
-            this.setUid(res.data.data.uid);
-          }
+          const data = res.data;
           this.$toast(res.data.message);
+          if (data.code == 0) {
+            this.saveUserInfo(data.data);
+            setTimeout(() => {
+              this.$router.push({ path: "/index" });
+            }, 500);
+          }
         });
     },
     start() {
@@ -114,7 +136,7 @@ export default {
     sendPhone() {
       //发送验证码
       this.$axios
-        .fetchPost("Mobile/Member/ServerSmsCode", {
+        .fetchPost("Mobile/Login/ServerSmsCode", {
           mobile: this.username
         })
         .then(res => {
@@ -129,11 +151,6 @@ export default {
             this.$toast(res.data.message);
           }
         });
-    },
-    goToLogin() {
-      this.$router.push({
-        path: "/login"
-      });
     }
   }
 };
@@ -161,4 +178,8 @@ export default {
   .van-count-down
     color #999
     font-size 13px
+.sub
+  &.success
+    background #ff6600
+    color #fff
 </style>

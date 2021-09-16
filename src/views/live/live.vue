@@ -54,14 +54,15 @@
 import Header from "@/components/header/header";
 import HospitalHeader from "@/components/hospital_header/hospital_header";
 import { mapState, mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "直播"
+    });
+  },
   name: "live",
   components: { Header, HospitalHeader },
-  metaInfo() {
-    return {
-      title: "直播"
-    };
-  },
   props: {},
   data() {
     return {

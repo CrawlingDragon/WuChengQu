@@ -4,14 +4,13 @@
     <div class="basic-info-box">
       <div class="title">基本信息</div>
       <div class="item">
-        <div class="left">医院名称：</div>
+        <div class="left">中心名称：</div>
         <div class="text">
           {{ intro.name }}
-          <span class="isstore" v-show="intro.isstore == 1">实体店</span>
         </div>
       </div>
       <div class="item">
-        <div class="left">医院属性：</div>
+        <div class="left">中心属性：</div>
         <div class="text">{{ intro.level }}</div>
       </div>
       <div class="item">
@@ -19,7 +18,7 @@
         <div class="text">{{ intro.zuowu }}</div>
       </div>
       <div class="item">
-        <div class="left">医院地址：</div>
+        <div class="left">中心地址：</div>
         <div class="text">{{ intro.address }}</div>
       </div>
       <div class="item num-item">
@@ -30,7 +29,7 @@
           {{ intro.isstore == 1 ? "处方" : "网诊" }} {{ intro.rnum }}</span
         >
       </div>
-      <div class="title2" v-if="mpublic.length != 0">直属下级医院</div>
+      <div class="title2" v-if="mpublic.length != 0">直属下级中心</div>
       <ul class="lower-level-ul" v-if="mpublic.length != 0">
         <li
           v-for="item in intro.mpublic"
@@ -42,7 +41,7 @@
       </ul>
     </div>
     <div class="introduce-info">
-      <div class="title">医院介绍</div>
+      <div class="title">中心介绍</div>
       <div class="text">{{ intro.introduce }}</div>
       <!-- <van-image class="img"></van-image>
       <div class="p1">医院门头</div>
@@ -55,11 +54,11 @@
       v-if="intro.ismember == 0 && intro.ismember == 1"
       @click="goToApplyVip"
     >
-      申请加入医院
+      申请加入中心
       <div class="free">免费</div>
     </div>
     <div class="joined" v-if="intro.ismember == 1">
-      {{ intro.addtime }} 加入医院成为会员
+      {{ intro.addtime }} 加入中心成为会员
     </div>
     <div class="look-more" @click="goToVip" v-show="intro.isstore == 1">
       了解更多会员权益 >
@@ -69,14 +68,15 @@
 <script>
 import Header from "@/components/hospital_header/hospital_header";
 import { mapState, mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "简介"
+    });
+  },
   name: "hospitalIntro",
   components: { Header },
-  metaInfo() {
-    return {
-      title: this.intro.name + "简介"
-    };
-  },
   props: {},
   data() {
     return {
@@ -188,8 +188,8 @@ export default {
         display inline-block
         margin-right 20px
         padding 8px 20px
-        color #155BBA
-        border 1px solid #155BBB
+        color $theme-color
+        border 1px solid $theme-color
         border-radius 4px
         font-size 14px
         margin-bottom 15px
@@ -246,7 +246,7 @@ export default {
     font-size 15px
   .look-more
     text-align center
-    color #155BBB
+    color $theme-color
     font-size 12px
     padding 0 15px 15px
 </style>

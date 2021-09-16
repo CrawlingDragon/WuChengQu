@@ -1,9 +1,12 @@
+import storage from "good-storage";
 import { createStore } from "vuex";
+import { saveUserInfo, saveToken } from "../common/js/saveUserInfo";
 
 const app = createStore({
   state() {
     return {
-      token: window.localStorage.getItem("token") || undefined, // 从缓存中获取token
+      token: storage.get("token", ""), // 从缓存中获取token
+      userInfo: storage.get("userInfo", {}),
       uid: window.localStorage.getItem("uid") || undefined, //登录用户uid
       initMid: process.env.VUE_APP_MID, //绍兴市顶级医院mid 63580    56915
       mid: window.localStorage.getItem("mid"), //医院mid
@@ -23,8 +26,11 @@ const app = createStore({
   mutations: {
     setToken(state, data) {
       // 设置token
+      // storage.set("token", data);
       state.token = data;
-      window.localStorage.setItem("token", data);
+    },
+    setUserInfo(state, data) {
+      state.userInfo = data;
     },
     setUid(state, uid) {
       state.uid = uid;
@@ -81,7 +87,22 @@ const app = createStore({
       window.localStorage.setItem("hospitalLogo", hospitalLogo);
     }
   },
-  actions: {},
+  actions: {
+    saveUserInfo({ commit }, data) {
+      //保存token和用户信息的action
+      let token = saveToken(data);
+      let userInfo = saveUserInfo(data);
+      commit("setToken", token);
+      commit("setUserInfo", userInfo);
+    },
+    cleanUserInfo({ commit }) {
+      //清除token和用户信息的action
+      let token = saveToken({ token: "" });
+      let userInfo = saveUserInfo({});
+      commit("setToken", token);
+      commit("setUserInfo", userInfo);
+    }
+  },
   modules: {}
 });
 export default app;

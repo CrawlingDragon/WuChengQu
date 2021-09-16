@@ -1,4 +1,9 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }">{{
+      content ? `${content}` : `首页`
+    }}</template>
+  </metainfo>
   <router-view v-slot="{ Component }">
     <keep-alive
       exclude="Login,mLogin,findPassword,sign,lookExpert,live,messageDetail"
@@ -11,7 +16,15 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
+
 export default {
+  setup() {
+    useMeta({
+      title: "",
+      htmlAttrs: { lang: "en", amp: true }
+    });
+  },
   data() {
     return {};
   },
@@ -26,12 +39,6 @@ export default {
   mounted() {
     this.getUserInfo();
     this.getAiId();
-    window.addEventListener("beforeunload", function() {
-      // dosomething
-      if (this.getCookie("ucenter_uid")) {
-        this.setLogined(2);
-      }
-    });
   },
   methods: {
     getCookie(cname) {

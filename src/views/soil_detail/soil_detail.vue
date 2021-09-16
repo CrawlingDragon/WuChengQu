@@ -122,7 +122,7 @@ export default {
       &:last-child
         border none
       &.title
-        color #155BBB
+        color $theme-color
         font-size 17px
       &.title2
         color #999999
@@ -157,7 +157,7 @@ export default {
         width 16%
       &.title
         .item
-          color #155BBB
+          color $theme-color
     .description
       padding 20px 12px
   .bottom
@@ -176,7 +176,7 @@ export default {
         flex 1
     .title
       font-size 15px
-      color #155BBB
+      color $theme-color
     .chufang-li
       display flex
       .chufang-img

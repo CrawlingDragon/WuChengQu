@@ -76,11 +76,14 @@
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
 import areaList from "@/common/js/area.js";
+import { useMeta } from "vue-meta";
 export default {
-  name: "meEdit",
-  metaInfo: {
-    title: "编辑资料"
+  setup() {
+    useMeta({
+      title: "编辑资料"
+    });
   },
+  name: "meEdit",
   components: { Header },
   props: {},
   data() {

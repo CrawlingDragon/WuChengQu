@@ -7,7 +7,6 @@ import axios from "@/http";
 
 // Vue.config.productionTip = false;
 
-import "@/common/css/base.styl";
 import "@/common/css/reseat.styl";
 import Vant from "vant";
 import { Dialog } from "vant";
@@ -26,7 +25,8 @@ import { Lazyload } from "vant";
 //   document.getElementsByTagName("head")[0].appendChild(meta);
 // }
 // new VConsole();
-import { createMetaManager, plugin as metaPlugin } from "vue-meta";
+import { createMetaManager } from "vue-meta";
+
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 app
@@ -35,7 +35,7 @@ app
   .use(Vant)
   .use(Dialog)
   .use(Lazyload)
-  .use(createMetaManager)
-  .use(metaPlugin)
-  .mount("#app");
+  .use(createMetaManager());
+
+app.mount("#app");
 // app

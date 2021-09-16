@@ -20,9 +20,12 @@
 import Header from "@/components/hospital_header/hospital_header";
 import RecommendExpert from "@/components/recommend_expert/recommend_expert";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  metaInfo: {
-    title: "专家列表"
+  setup() {
+    useMeta({
+      title: "专家列表"
+    });
   },
   name: "hospitalExpert",
   components: { Header, RecommendExpert },

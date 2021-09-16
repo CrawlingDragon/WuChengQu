@@ -1,6 +1,6 @@
 <template>
   <div class="hospital-container">
-    <HospitalHeader header="indexHeader" navHeader="医院主页"></HospitalHeader>
+    <HospitalHeader header="indexHeader" navHeader="中心主页"></HospitalHeader>
     <HospitalNav
       :isistore="mpublic.isistore"
       :ismember="mpublic.ismember"
@@ -26,7 +26,7 @@
       查看更多 >
     </div>
     <div class="expert-list" v-show="expertList.length != 0">
-      <div class="title">本院专家</div>
+      <div class="title">中心专家</div>
       <ul class="expert-ul clearfix">
         <li v-for="item in expertList" :key="item.expertid">
           <RecommendExpert :list="item" :isSelfExpert="true"></RecommendExpert>
@@ -45,7 +45,7 @@
       </ul>
     </div>
     <van-empty
-      description="本院暂时还没有网诊"
+      description="暂时还没有网诊"
       v-show="wenList.length == 0 && wenListNoData"
     ></van-empty>
     <div
@@ -63,11 +63,16 @@ import HospitalNav from "@/components/hospital_nav/hospital_nav";
 import MessageItem from "@/components/message_item/message_item";
 import RecommendExpert from "@/components/recommend_expert/recommend_expert";
 import OnlineItem from "@/components/online_item/online_item";
-
+import { useMeta } from "vue-meta";
 import { mapState, mapMutations } from "vuex";
 import { ImagePreview } from "vant";
 export default {
   name: "hospital",
+  setup() {
+    useMeta({
+      title: "婺城区运营中心"
+    });
+  },
   components: {
     HospitalHeader,
     HospitalNav,
@@ -76,11 +81,7 @@ export default {
     OnlineItem,
     [ImagePreview.Component.name]: ImagePreview.Component
   },
-  metaInfo() {
-    return {
-      title: this.title
-    };
-  },
+
   props: {},
   data() {
     return {

@@ -3,7 +3,7 @@
     <Header header="searchHeader" :address="address"></Header>
 
     <div class="box" v-if="list_joinin != ''">
-      <div class="title">加入的医院</div>
+      <div class="title">加入的中心</div>
       <ul>
         <li v-for="item in list_joinin" :key="item.id">
           <RecommendHospital :list="item"></RecommendHospital>
@@ -11,7 +11,7 @@
       </ul>
     </div>
     <div class="box" v-if="list_fav != ''">
-      <div class="title">关注的医院</div>
+      <div class="title">关注的中心</div>
       <ul>
         <li v-for="item in list_fav" :key="item.id">
           <RecommendHospital :list="item"></RecommendHospital>
@@ -19,7 +19,7 @@
       </ul>
     </div>
     <div class="box" v-if="list_area != ''">
-      <div class="title">庄稼医院</div>
+      <div class="title">运营中心</div>
       <ul>
         <li v-for="item in list_area" :key="item.id">
           <RecommendHospital :list="item"></RecommendHospital>
@@ -42,14 +42,18 @@ import RecommendHospital from "@/components/recommend_hospital/recommend_hospita
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
 import { inToHospitalLocal } from "@/common/js/into_hospital_local";
-const defaultCity = "绍兴市";
+import { useMeta } from "vue-meta";
+const defaultCity = "婺城区";
 export default {
+  setup() {
+    useMeta({
+      title: "进院"
+    });
+  },
   name: "intoHospital",
   components: { Header, RecommendHospital, Foot },
   props: {},
-  metaInfo: {
-    title: "进院"
-  },
+
   data() {
     return {
       list_joinin: "",

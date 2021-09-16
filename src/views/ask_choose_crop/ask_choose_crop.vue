@@ -199,5 +199,5 @@ export default {
       padding-top 200px
       text-align center
       .other
-        color #155BBB
+        color $theme-color
 </style>

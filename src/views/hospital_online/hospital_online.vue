@@ -21,16 +21,20 @@ import Header from "@/components/hospital_header/hospital_header";
 import OnlineItem from "@/components/online_item/online_item";
 import { mapState } from "vuex";
 import { ImagePreview } from "vant";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "线上网诊"
+    });
+  },
   name: "hospitalOnline",
   components: {
     Header,
     OnlineItem,
     [ImagePreview.Component.name]: ImagePreview.Component
   },
-  metaInfo: {
-    title: "线上网诊"
-  },
+
   props: {},
   data() {
     return {

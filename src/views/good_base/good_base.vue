@@ -37,14 +37,16 @@
 <script>
 import Header from "@/components/hospital_header/hospital_header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({ title: "优质基地" });
+  },
   name: "goodBase",
   components: { Header },
   props: {},
-  metaInfo: {
-    title: "优质基地"
-  },
+
   data() {
     return {
       list: [],

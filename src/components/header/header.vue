@@ -23,7 +23,7 @@
       </div>
       <div class="no_index_header" v-if="!indexHeader" @click="clickLogo">
         <van-image :src="require('./1.png')" class="logo"></van-image>
-        绍兴市为农服务平台首页
+        婺城区为农服务平台首页
       </div>
       <div class="right-nav van-hairline--left">
         <div class="index-icon" @click.stop="goToIndex">
@@ -31,7 +31,10 @@
         </div>
         <div class="fast-nav-icon" @click="openFastNav"></div>
       </div>
-      <fastNav :showFlag="fastNavShowFlag" @changeFlag="closeFaseNav"></fastNav>
+      <fastNav
+        v-model:showFlag="fastNavShowFlag"
+        @changeFlag="closeFaseNav"
+      ></fastNav>
     </div>
   </div>
 </template>
@@ -132,9 +135,9 @@ export default {
       margin-right 20px
       box-sizing border-box
       &.active
-        color #155BBB
+        color $theme-color
         font-size 17px
-        border-bottom 2px solid #155BBB
+        border-bottom 2px solid $theme-color
   .right-nav
     width 85px
     display flex
@@ -161,7 +164,7 @@ export default {
     flex 1
     display flex
     align-items center
-    color #155BBB
+    color $theme-color
     .logo
       width 20px
       height 20px

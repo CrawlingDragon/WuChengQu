@@ -1,4 +1,4 @@
-
+$theme-color =#599524
 bj-image($url)
   background-image url($url + ".png")
   background-size cover
@@ -11,59 +11,60 @@ bj-image($url)
     display: none   
 .van-dialog__message
   font-size 16px !important   
-@media (min-width 640px){
-    .answer-bar{
-        left 50% !important
-        transform: translateX(-50%)
-        width: 100%
-        max-width 640px
-        }
-    .choose_crop-container{
-        left 50% !important
-        transform: translateX(-50%)
-        width: 100%
-        max-width 640px
-        overflow-x hidden !important
-        top 0 !important
-        position fixed !important
-        height 100%
-        }  
-        .van-sticky--fixed{
-            left 50% !important
-            transform: translateX(-50%)
-            width: 100%
-            max-width 640px
-            }  
-        .hospital_fast_nav-container{
-            left 50% !important
-            transform: translateX(-50%)
-            width: 100%
-            max-width 640px
-        }
-        .vip-container{
-            left 50% !important
-            transform: translateX(-50%)
-            width: 100%
-            max-width 640px
-            top 0 !important
-            }
-            .van-popup{
-                left 50% !important
-                transform: translateX(-50%)
-                width: 100%
-                max-width 640px
+.van-dialog__cancel
+  color $theme-color !important   
+.van-index-bar__index
+  color $theme-color !important   
+.van-tab--active
+  color $theme-color !important  
 
-                }
-            .index_online-container.addressOverflow{
-                left 50% !important
-                transform: translateX(-50%)
-                width: 100%
-                max-width 640px
-                top 0 !important
-            }
-             .index_online-container.addressOverflow .van-sticky{
-                margin-top: 50px}
-    }  
+@media (min-width 640px)
+  .answer-bar
+    transform: translateX(-50%)
+    left :50% !important
+    width: 100%
+    max-width 640px
+  .choose_crop-container
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px
+    overflow-x hidden !important
+    top 0 !important
+    position fixed !important
+    height 100%
+  .van-sticky--fixed
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px 
+  .hospital_fast_nav-container
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px
+  .vip-container
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px
+    top 0 !important
+  .van-popup
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px
+  .index_online-container.addressOverflow
+    left 50% !important
+    transform: translateX(-50%)
+    width: 100%
+    max-width 640px
+    top 0 !important
+  
+  .index_online-container.addressOverflow 
+    .van-sticky
+      margin-top: 50px
+
 
   
 

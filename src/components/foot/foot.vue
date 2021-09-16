@@ -18,7 +18,7 @@
             :class="props.active ? icon02.active : icon02.inactive"
           ></div>
         </template>
-        进院
+        中心
       </van-tabbar-item>
       <van-tabbar-item to="/ask">
         <template #icon="props">
@@ -198,4 +198,6 @@ export default {
     background url('./19.png') no-repeat
     background-size cover
     background-position center center
+/deep/.van-tabbar-item--active
+  color $theme-color
 </style>

@@ -64,11 +64,14 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState, mapMutations } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  name: "searchHospital",
-  metaInfo: {
-    title: "搜索医院"
+  setup() {
+    useMeta({
+      title: "搜索医院"
+    });
   },
+  name: "searchHospital",
   components: { Header },
   props: {},
   data() {

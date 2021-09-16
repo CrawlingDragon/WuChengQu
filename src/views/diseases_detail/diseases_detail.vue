@@ -15,12 +15,15 @@
 </template>
 <script>
 import Header from "@/components/header/header";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "病虫害详情"
+    });
+  },
   name: "diseasesDetail",
   components: { Header },
-  metaInfo: {
-    title: "病虫害详情"
-  },
   props: {},
   data() {
     return {
@@ -86,7 +89,7 @@ export default {
   .next
     text-align right
     padding 20px 12px
-    color #155BBB
+    color $theme-color
     font-size 16px
     line-height 1.2
   .my-swipe

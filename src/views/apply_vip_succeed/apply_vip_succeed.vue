@@ -3,25 +3,22 @@
     <Header header="indexHeader" navHeader="申请会员"></Header>
     <van-icon name="checked" class="icon" />
     <p class="p1">会员申请已提交</p>
-    <p class="p2">中农在线会发短信告知你审核结果，请耐心等待</p>
-    <div class="index-btn" @click="goToHospitalIndex">返回医院首页</div>
+    <p class="p2">我们会发短信告知你审核结果，请耐心等待</p>
+    <div class="index-btn" @click="goToHospitalIndex">返回中心首页</div>
   </div>
 </template>
 <script>
 import Header from "@/components/hospital_header/hospital_header";
+import { useMeta } from "vue-meta";
+
 export default {
-  metaInfo: {
-    title: "申请会员"
+  setup() {
+    useMeta({
+      title: "婺城区运营中心"
+    });
   },
   name: "applyVipSucceed",
   components: { Header },
-  props: {},
-  data() {
-    return {};
-  },
-  computed: {},
-  watch: {},
-  mounted() {},
   methods: {
     goToHospitalIndex() {
       this.$router.replace({ path: "/hospital" });

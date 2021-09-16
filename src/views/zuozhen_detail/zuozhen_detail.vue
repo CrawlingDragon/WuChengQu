@@ -84,12 +84,15 @@ export default {
   props: {},
   data() {
     return {
-      zuozhen: "",
-      id: this.$route.query.id,
+      zuozhen: "我的-巡诊详情",
       products: []
     };
   },
-  computed: {},
+  computed: {
+    id() {
+      return this.$route.query.id;
+    }
+  },
   watch: {
     $route() {
       this.getZuoDetail(this.id);
@@ -127,7 +130,7 @@ export default {
     background #fff
     padding-left 12px
     .title1
-      color #155BBB
+      color $theme-color
       font-size 17px
     li
       min-height 50px
@@ -161,7 +164,7 @@ export default {
     background #fff
     .title
       font-size 17px
-      color #155BBB
+      color $theme-color
       padding 15px 12px
       border-bottom 1px solid #e5e5e5
     & > div

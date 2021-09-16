@@ -19,14 +19,16 @@
 <script>
 import Header from "@/components/header/header";
 import OnlineItem from "@/components/online_item/online_item";
+import { useMeta } from "vue-meta";
 
 export default {
-  name: "searchOnlineCrop",
-  metaInfo() {
-    return {
-      title: this.crop + "搜索结果"
-    };
+  setup() {
+    useMeta({
+      title: "搜索结果"
+    });
   },
+  name: "searchOnlineCrop",
+
   components: { Header, OnlineItem },
   props: {},
   data() {

@@ -64,7 +64,7 @@
         <van-grid-item> </van-grid-item>
       </van-grid>
     </div>
-    <div class="btns" v-if="uid == '' || uid == undefined">
+    <div class="btns" v-if="!token">
       <div class="btn1" @click="goToLogin">登录</div>
       <div class="btn2" @click="goToSign">注册</div>
     </div>
@@ -73,7 +73,7 @@
         width="35"
         height="35"
         round
-        :src="userAvatar"
+        :src="avatar"
         class="avator"
         fit="cover"
         @click="goToMe"
@@ -83,22 +83,54 @@
     </div>
     <div class="index-btn" @click="goToIndex">
       <div class="logo"></div>
-      绍兴市为农服务平台首页
+      婺城区为农服务平台首页
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions, useStore } from "vuex";
 import { Dialog } from "vant";
+import { computed, ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 export default {
-  name: "fast_nav",
-  components: {},
   props: {
     showFlag: {
       type: Boolean,
       default: false
     }
   },
+  setup(props, { emit }) {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+    const userName = computed(() => store.state.userInfo.username);
+    const avatar = computed(() => store.state.userInfo.avatar);
+    const token = computed(() => store.state.token);
+    const pathName = ref("");
+
+    onMounted(() => {
+      pathName.value = route.name;
+    });
+
+    function goToLogin() {
+      if (pathName.value == "Login") {
+        emit("update:showFlag", false);
+      } else {
+        router.push({
+          path: "/login"
+        });
+      }
+    }
+    return {
+      userName,
+      avatar,
+      token,
+      pathName,
+      goToLogin
+    };
+  },
+  name: "fast_nav",
+  components: {},
   data() {
     return {
       fromStoreUrl: process.env.VUE_APP_STORE_URL,
@@ -106,56 +138,19 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "initMid", "userAvatar", "userName", "aiExpertId"])
-    // cook(){
-    //   return this.getCookie('ucenter_uid')
-    // }
+    ...mapState(["initMid", "aiExpertId"])
   },
-  watch: {
-    // cook(newVal){
-    //   // cookie 为空时清空uid,跳转到登录页
-    //   console.log('watchnewVal :>> ', newVal);
-    //   if(newVal == ''){
-    //      this.setUid("")
-    //      setTimeout(()=>{this.$router.push({ path: "/login" });},100)
-    //   }
-    // }
-  },
-  mounted() {},
   methods: {
-    getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    },
-    ...mapMutations(["setUid", "setMid", "setLogined"]),
+    ...mapMutations(["setMid"]),
+    ...mapActions(["cleanUserInfo"]),
     closeBox() {
       this.$emit("changeFlag", false);
     },
-    goToLogin() {
-      this.$router.push({
-        path: "/login"
-      });
-    },
+
     goToSign() {
       this.$router.push({
         path: "/sign"
       });
-    },
-    createScript(src) {
-      let js = document.createElement("script");
-      js.setAttribute("type", "text/javascript");
-      js.src = src;
-      document.getElementsByTagName("head")[0].appendChild(js);
     },
     loginOut() {
       Dialog.confirm({
@@ -167,21 +162,16 @@ export default {
       })
         .then(() => {
           // on confirm
-          // setTimeout(()=>{this.$router.push({ path: "/login" });},100)
         })
         .catch(() => {
           // on cancel
-          this.$axios.fetchPost("/Mobile/Member/logout").then(res => {
+          this.$axios.fetchPost("/Mobile/Login/logout").then(res => {
             if (res.data.code == 0) {
-              for (let i = 0; i < res.data.data.msg.length; i++) {
-                this.createScript(res.data.data.msg[i]);
-              }
-              // setTimeout(()=>{this.setUid("");},1000)
-              this.setUid("");
-              this.setLogined(1);
+              this.cleanUserInfo();
               this.$router.push({ path: "/login" });
             }
           });
+          console.log(this.token);
         });
     },
     goToIndex() {
@@ -312,15 +302,15 @@ export default {
       &:first-child
         margin-right 30px
     .btn1
-      color #155BBB
-      border 1px solid #155BBB
+      color $theme-color
+      border 1px solid $theme-color
       font-size 16px
       vertical-align middle
     .btn2
-      background rgba(21, 91, 187, 1)
+      background $theme-color
       color #fff
       font-size 16px
-      border 1px solid #333333
+      border 1px solid $theme-color
       vertical-align middle
   .logined
     background #fff
@@ -334,7 +324,7 @@ export default {
       color #333
       flex 1
     .login-out
-      color #155BBB
+      color $theme-color
       font-size 16px
       margin 0 12px
   .index-btn
@@ -345,13 +335,13 @@ export default {
     left 50%
     transform translateX(-50%)
     background rgba(248, 248, 248, 0)
-    border 1px solid rgba(21, 91, 187, 1)
+    border 1px solid $theme-color
     border-radius 4px
     line-height 30px
     font-size 16px
     display flex
     align-items center
-    color #155BBB
+    color $theme-color
     .logo
       width 20px
       height 20px

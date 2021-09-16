@@ -13,13 +13,17 @@
 <script>
 import Header from "@/components/hospital_header/hospital_header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({
+      title: "坐诊巡诊"
+    });
+  },
   name: "zuozhenList",
   components: { Header },
-  metaInfo: {
-    title: "坐诊巡诊"
-  },
+
   props: {},
   data() {
     return {

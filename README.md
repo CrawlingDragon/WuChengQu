@@ -1,27 +1,3 @@
-# wu_h5
+# 操作 store 中的 state 只能通过 mutations 或者 actions
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# WuChengQu_H5
-# WuChengQu
-# WuChengQu
+# 协议 与隐私政策 内容

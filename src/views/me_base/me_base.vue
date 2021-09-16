@@ -40,12 +40,16 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  name: "meBase",
-  metaInfo: {
-    title: "我的基地"
+  setup() {
+    useMeta({
+      title: "我的基地"
+    });
   },
+  name: "meBase",
+
   components: { Header },
   props: {},
   data() {

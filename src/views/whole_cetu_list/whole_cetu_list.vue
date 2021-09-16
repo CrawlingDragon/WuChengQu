@@ -20,16 +20,18 @@
 import Header from "@/components/header/header";
 // import HeaderHospital from "@/components/hospital_header/hospital_header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({
+      title: "土壤检测"
+    });
+  },
   name: "wholeCeTuList",
   components: { Header },
   props: {},
-  metaInfo() {
-    return {
-      title: "土壤检测"
-    };
-  },
+
   created() {},
   data() {
     return {

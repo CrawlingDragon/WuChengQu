@@ -15,11 +15,15 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 export default {
-  name: "wholeZuoZhenList",
-  metaInfo: {
-    title: "我的坐诊巡诊"
+  setup() {
+    useMeta({
+      title: "我的坐诊巡诊"
+    });
   },
+  name: "wholeZuoZhenList",
+
   components: { Header },
   props: {},
   data() {

@@ -37,12 +37,15 @@
 </template>
 <script>
 import Header from "@/components/header/header";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "个人简介"
+    });
+  },
   name: "expertDetail",
   components: { Header },
-  metaInfo: {
-    title: "个人简介"
-  },
   props: {},
   data() {
     return {

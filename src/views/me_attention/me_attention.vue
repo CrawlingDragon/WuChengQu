@@ -1,13 +1,10 @@
 <template>
   <div class="me_attention-container">
     <Header :indexHeader="false"></Header>
-    <van-tabs
-      v-model="active"
-      sticky
-      title-active-color="#155BBB"
-      color="#155BBB"
-    >
-      <van-tab title="医院">
+    <van-tabs v-model="active" sticky color="#599524">
+      <!-- title-active-color="#155BBB" -->
+      <!-- color="#155BBB" -->
+      <van-tab title="中心">
         <ul class="hospital-ul" v-if="!noDataHospital">
           <li v-for="item in hospitalList" :key="item.id">
             <RecommendHospital :list="item"></RecommendHospital>
@@ -31,11 +28,15 @@ import Header from "@/components/header/header";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
 import RecommendExpert from "@/components/recommend_expert/recommend_expert";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
-  metaInfo: {
-    title: "我的关注"
+  setup() {
+    useMeta({
+      title: "我的关注"
+    });
   },
+
   name: "meAttention",
   components: { Header, RecommendExpert, RecommendHospital },
   props: {},

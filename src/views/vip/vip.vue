@@ -3,12 +3,12 @@
     <Header :indexHeader="false"></Header>
     <div class="content">
       <div class="icon"></div>
-      <p class="h1">庄稼医院会员权益</p>
+      <p class="h1">数字乡村运营中心会员权益</p>
       <p class="p2">一站式解决作物问题</p>
       <ul>
         <li>
           <div class="left">线上网诊</div>
-          <div class="right">享受医院专属答疑服务</div>
+          <div class="right">享受中心专属答疑服务</div>
         </li>
         <li>
           <div class="left">坐诊巡诊</div>
@@ -22,7 +22,7 @@
           <div class="left">专家挂号</div>
           <div class="right">预约专家挂号，一对一服务</div>
         </li>
-        <li>
+        <!-- <li>
           <div class="left">优质基地</div>
           <div class="right">优质基地认证背书农产品上行</div>
         </li>
@@ -41,10 +41,10 @@
         <li>
           <div class="left">供应链金融</div>
           <div class="right">会员优先享受惠农贷款服务</div>
-        </li>
+        </li> -->
       </ul>
       <div class="btn" @click="goToIntoHospital">
-        选择医院加入会员
+        选择中心加入会员
         <div class="free">免费</div>
       </div>
     </div>
@@ -53,13 +53,16 @@
 <script>
 import Header from "@/components/header/header";
 import { mapState } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
+  setup() {
+    useMeta({
+      title: "会员权益"
+    });
+  },
   name: "vip",
   components: { Header },
-  metaInfo: {
-    title: "会员权益"
-  },
   props: {},
   data() {
     return {

@@ -29,10 +29,10 @@
         <div class="icon icon05"></div>
         <p>提问</p>
       </li>
-      <li @click="goToGoodBase" v-if="hospitalIsStore == 1">
+      <!-- <li @click="goToGoodBase" v-if="hospitalIsStore == 1">
         <div class="icon icon06"></div>
         <p>优质基地</p>
-      </li>
+      </li> -->
       <li>
         <a
           :href="shareUrl + 'Home/Company/companyDetail/ucuid/' + ucuid"

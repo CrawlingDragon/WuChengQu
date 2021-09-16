@@ -184,13 +184,16 @@
 import Header from "@/components/header/header";
 import { mapState, mapMutations } from "vuex";
 import { ImagePreview } from "vant";
+import { useMeta } from "vue-meta";
 export default {
+  setup() {
+    useMeta({
+      title: "问答详情"
+    });
+  },
   name: "askDetail",
   components: { Header, [ImagePreview.Component.name]: ImagePreview.Component },
   props: {},
-  metaInfo: {
-    title: "问答详情"
-  },
   data() {
     return {
       tid: this.$route.query.tid,
@@ -391,7 +394,7 @@ export default {
           display flex
           align-items center
           margin-top 10px
-          color #155BBB
+          color $theme-color
           font-size 12px
           .icon
             width 15px
@@ -581,7 +584,7 @@ export default {
       max-width 1200px
       margin 0 auto
       /deep/.no_index_header
-        color #fff
+        color $theme-color
     .answer-bar
       background  #0c3387
       max-width 1200px
