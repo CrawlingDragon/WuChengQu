@@ -106,7 +106,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid"])
+    ...mapState(["token"])
   },
   watch: {
     id(newVal) {
@@ -119,7 +119,10 @@ export default {
   methods: {
     getExpertData() {
       this.$axios
-        .fetchPost("Mobile/user/homepage", { id: this.uid, uId: this.uid })
+        .fetchPost("Mobile/user/homepage", {
+          id: this.token,
+          token: this.token
+        })
         .then(res => {
           if (res.data.code == 0) {
             this.expertData = res.data.data;
@@ -131,11 +134,11 @@ export default {
           }
         });
     },
-    getIAsked(id) {
+    getIAsked() {
       // 解答，==> 就是我答的接口
       this.$axios
         .fetchPost("/Mobile/user/getWenList", {
-          uId: id,
+          token: this.token,
           page: 1,
           pagesize: 12,
           action: "answer"
@@ -146,11 +149,11 @@ export default {
           }
         });
     },
-    getAskMe(id) {
+    getAskMe() {
       //提问 ===> 就是我
       this.$axios
         .fetchPost("/Mobile/user/getWenList", {
-          uId: id,
+          uId: this.token,
           page: 1,
           pagesize: 12,
           action: "tome"
@@ -164,7 +167,7 @@ export default {
     getHospitalList() {
       // 我加入的 医院
       this.$axios
-        .fetchPost("/Mobile/user/myJoinHospital", { uId: this.id })
+        .fetchPost("/Mobile/user/myJoinHospital", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.hospitalList = res.data.data.list;

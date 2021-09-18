@@ -1,6 +1,6 @@
 <template>
   <div class="item van-hairline--bottom">
-    <div class="left-time" @click="detail(item.id)">{{ item.addtime }}</div>
+    <div class="left-time" @click="detail(item.id)">{{ item.adddate }}</div>
     <div class="text">
       <div class="p" @click="detail(item.id)">
         {{ item.content }}
@@ -18,7 +18,7 @@
           <div class="edit-icon"></div>
           更改
         </div>
-        <div class="detele" @click="deteleFramHistory(item.id)">
+        <div class="detele" @click="deteleFramHistory(item.id)" v-if="false">
           <van-icon name="close" /><span>删除</span>
         </div>
         <div class="medicine-icon" @click="detail(item.id)">
@@ -59,8 +59,7 @@ export default {
       // 删除农事记录
       this.$dialog
         .confirm({
-          message: "确定删除",
-          confirmButtonColor: "#8BC34A"
+          message: "确定删除"
         })
         .then(() => {
           // on confirm
@@ -85,7 +84,7 @@ export default {
     },
     detail(id) {
       this.$router.push({
-        path: "/base_fram_detail",
+        path: "/base_edit",
         query: { id: id }
       });
     }

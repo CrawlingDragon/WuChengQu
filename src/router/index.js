@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import store from "../store";
 
 const routes = [
   {
@@ -221,38 +222,7 @@ const routes = [
   //       /*webpackChunkName:"base_location" */ "@/views/base_location/base_location"
   //     )
   // },
-  {
-    path: "/solution",
-    component: () =>
-      import(/* webpackChunkName:"solution" */ "@/views/solution/solution"),
-    children: [
-      {
-        path: "/",
-        redirect: "/takeCase"
-      },
-      {
-        path: "/allCase",
-        component: () =>
-          import(
-            /* webpackChunkName:"allCase" */ "@/views/solution/all_case/all_case.vue"
-          )
-      },
-      {
-        path: "/takeCase",
-        component: () =>
-          import(
-            /* webpackChunkName:"takeCase" */ "@/views/solution/take_case/take_case"
-          )
-      }
-    ]
-  },
-  {
-    path: "/preview",
-    component: () =>
-      import(
-        /* webpackChunkName:"preview" */ "@/views/solution/preview/preview"
-      )
-  },
+
   {
     path: "/message",
     name: "message",
@@ -281,6 +251,12 @@ const routes = [
   {
     path: "/expert",
     name: "expert",
+    component: () =>
+      import(/*webpackChunkName:"expert" */ "@/views/expert/expert")
+  },
+  {
+    path: "/my_homePage",
+
     component: () =>
       import(/*webpackChunkName:"expert" */ "@/views/expert/expert")
   },
@@ -436,6 +412,19 @@ const routes = [
       )
   },
   {
+    path: "/cropRecord",
+    name: "cropRecord",
+    component: () =>
+      import(
+        /* webpackChunkName:"cropRecord" */ "@/views/base_center/crop_record/crop_record"
+      )
+  },
+  {
+    path: "/base_edit",
+    component: () =>
+      import(/* webpackChunkName:"cropRecord" */ "@/views/base_edit/base_edit")
+  },
+  {
     path: "/base_center",
     name: "base_center",
     component: () =>
@@ -443,10 +432,6 @@ const routes = [
         /*webpackChunkName:"base_center" */ "@/views/base_center/base_center"
       ),
     children: [
-      {
-        path: "/",
-        redirect: "/center"
-      },
       {
         path: "/center",
         component: () =>
@@ -504,72 +489,35 @@ const router = createRouter({
 //   return originalPush.call(this, location).catch(err => err);
 // };
 
-// router.beforeEach((to, from, next) => {
-//   //单点登录
-//   function getCookie(cname) {
-//     var name = cname + "=";
-//     var ca = document.cookie.split(";");
-//     for (var i = 0; i < ca.length; i++) {
-//       var c = ca[i];
-//       while (c.charAt(0) == " ") {
-//         c = c.substring(1);
-//       }
-//       if (c.indexOf(name) == 0) {
-//         return c.substring(name.length, c.length);
-//       }
-//     }
-//     return "";
-//   }
-
-//   //判断cookie 是否存在
-//   var ucenter_uid = getCookie("ucenter_uid"); //是==>拿到uid，设置uid
-//   let ucenter_islogin = getCookie("ucenter_islogin"); // cookie的username
-
-//   // console.log('ucenter_uid :>> ', ucenter_uid);
-//   let env = process.env.NODE_ENV == "development";
-//   if (!env) {
-//     if (!ucenter_uid) {
-//       store.commit("setLogined", 2);
-//     }
-//     if (store.state.logined == 1) {
-//       next(true);
-//     } else {
-//       if (ucenter_uid && ucenter_islogin == 1) {
-//         store.commit("setUid", ucenter_uid);
-//       }
-//       if (ucenter_islogin == 0) {
-//         store.commit("setUid", "");
-//       }
-//     }
-//   }
-//   // console.log('store.state.logined :>> ', store.state.logined);
-
-//   //否 ==> 就不处理
-//   let uid = store.state.uid;
-//   if (uid == "" || uid == undefined) {
-//     //没登录的状态 不能去这些页面
-//     if (
-//       to.name == "wholeCeTuList" ||
-//       to.name == "ask" ||
-//       to.name == "me" ||
-//       to.name == "zuozhenList" ||
-//       to.name == "cetuList" ||
-//       to.name == "expertRegistration" ||
-//       to.name == "wholeZuoZhenList" ||
-//       to.name == "applyVip"
-//     ) {
-//       if (from.name == "Login") {
-//         return;
-//       }
-//       next("/login");
-//     }
-//   } else {
-//     if (to.name == "Login" || to.name == "mLogin") {
-//       next("/index");
-//     }
-//     store.commit("setLogined", 1);
-//   }
-//   next(true);
-// });
+router.beforeEach((to, from, next) => {
+  if (
+    to.name == "wholeCeTuList" ||
+    to.name == "ask" ||
+    to.name == "me" ||
+    to.name == "zuozhenList" ||
+    to.name == "cetuList" ||
+    to.name == "expertRegistration" ||
+    to.name == "wholeZuoZhenList" ||
+    to.name == "applyVip" ||
+    to.name == "me_answer" ||
+    to.name == "me_attention" ||
+    to.name == "me_base" ||
+    to.name == "me_edit" ||
+    to.name == "me_homePage" ||
+    to.name == "me_hospital" ||
+    to.name == "me_registration"
+  ) {
+    console.log(store.state.token);
+    if (store.state.token == "") {
+      next({
+        path: "/login"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

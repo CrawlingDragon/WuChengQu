@@ -1,6 +1,6 @@
 <template>
   <div class="crop_record-container">
-    <div class="nav-bar van-hairline--bottom">
+    <div class="nav-bar van-hairline--bottom" v-if="false">
       <router-link
         class="nav"
         :to="{
@@ -23,7 +23,7 @@
     </div>
     <div class="farm-record-content" v-show="!noData">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
@@ -36,12 +36,14 @@
           @deteleHistory="updateDeteleHistory"
         ></FramItem>
       </van-list>
-      <div class="bottom-bar">
-        <div class="issue-btn1" @click="goToIssueFram">
+    </div>
+    <div class="bottom-bar">
+      <router-link custom v-slot="{ navigate }" to="/base_edit">
+        <div class="issue-btn1" @click="navigate">
           <van-icon name="plus" class="issue-icon" />
           <span>发布农事</span>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="no-take-wrap" v-show="noData">
       <p>暂无记录</p>
@@ -51,6 +53,7 @@
 <script>
 import FramItem from "@/components/fram_item/fram_item";
 import { ImagePreview } from "vant";
+import { mapState } from "vuex";
 
 export default {
   name: "crop_record",
@@ -69,13 +72,17 @@ export default {
     };
   },
   computed: {
+    ...mapState(["token"]),
     gId() {
       return this.$route.query.gId;
+    },
+    id() {
+      return this.$route.query.id;
     }
   },
   watch: {},
   mounted() {
-    this.getHistoryList();
+    // this.getHistoryList();
   },
   unmounted() {},
   methods: {
@@ -88,12 +95,11 @@ export default {
       });
     },
     getHistoryList() {
-      this.id = this.$route.query.id;
       this.page++;
       this.loading = true;
       this.$axios
-        .fetchGet("API/User/getgbaserecordlist", {
-          uId: this.gId,
+        .fetchPost("Mobile/Farmer/getFarmerList", {
+          token: this.token,
           page: this.page
         })
         .then(res => {
@@ -104,7 +110,9 @@ export default {
           if (res.data.code == 201) {
             if (this.page == 1) {
               this.noData = true;
+              this.finished = true;
             } else {
+              this.loading = false;
               this.finished = true;
             }
           }
@@ -120,15 +128,6 @@ export default {
     updateDeteleHistory(id) {
       this.list = this.list.filter(item => {
         return item.id != id;
-      });
-    },
-    goBack() {
-      this.$router.go(-1);
-    },
-    goToIssueFram() {
-      // 去发布农事
-      this.$router.push({
-        path: "/base_edit"
       });
     }
   }
@@ -187,7 +186,7 @@ export default {
     margin 0 auto
     margin-top 30px
 .bottom-bar
-  padding 0 12px 5px
+  padding 5px 12px 5px
   position fixed
   bottom 0
   left 0

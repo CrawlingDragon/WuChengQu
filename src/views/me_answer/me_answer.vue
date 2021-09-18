@@ -100,7 +100,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "mid", "initMid"])
+    ...mapState(["token", "mid", "initMid"])
   },
   watch: {
     scollType(newVal) {
@@ -150,7 +150,7 @@ export default {
       // 我问的
       this.$axios
         .fetchPost("/Mobile/user/getWenList", {
-          uId: this.uid,
+          token: this.token,
           action: "ask",
           page: this.page1
         })
@@ -172,7 +172,7 @@ export default {
       this.page2 += 1;
       this.$axios
         .fetchPost("/Mobile/user/getWenList", {
-          uId: this.uid,
+          token: this.token,
           page: this.page2,
           action: "answer"
         })
@@ -194,7 +194,7 @@ export default {
       this.page3 += 1;
       this.$axios
         .fetchPost("/Mobile/user/getWenList", {
-          uId: this.uid,
+          token: this.token,
           action: "tome",
           page: this.page3
         })

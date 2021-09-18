@@ -58,7 +58,7 @@
           <div class="icon06"></div>
         </template>
       </van-cell>
-      <van-cell title="农事记录" to="/solution" is-link>
+      <van-cell title="农事记录" to="/cropRecord" is-link>
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <template #icon>
           <div class="icon11"></div>
@@ -78,7 +78,7 @@
     </van-cell>
     <van-cell
       title="个人主页"
-      :to="{ path: '/expert', query: { from: 'my', id: uid } }"
+      :to="{ path: '/my_homePage', query: { from: 'my', id: info.uid } }"
       is-link
       style="margin-top:10px"
     >
@@ -130,7 +130,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "initMid"])
+    ...mapState(["token", "initMid"])
   },
   created() {},
   watch: {},
@@ -141,7 +141,7 @@ export default {
     getInfo() {
       this.$axios
         .fetchPost("/Mobile/User/userCenter", {
-          uId: this.uid,
+          token: this.token,
           mId: this.initMid
         })
         .then(res => {

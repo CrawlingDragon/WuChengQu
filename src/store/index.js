@@ -1,6 +1,7 @@
 import storage from "good-storage";
 import { createStore } from "vuex";
 import { saveUserInfo, saveToken } from "../common/js/saveUserInfo";
+import Cookies from "js-cookie";
 
 const app = createStore({
   state() {
@@ -92,6 +93,7 @@ const app = createStore({
       //保存token和用户信息的action
       let token = saveToken(data);
       let userInfo = saveUserInfo(data);
+      Cookies.set("token", token);
       commit("setToken", token);
       commit("setUserInfo", userInfo);
     },
@@ -99,6 +101,7 @@ const app = createStore({
       //清除token和用户信息的action
       let token = saveToken({ token: "" });
       let userInfo = saveUserInfo({});
+      Cookies.remove("token");
       commit("setToken", token);
       commit("setUserInfo", userInfo);
     }

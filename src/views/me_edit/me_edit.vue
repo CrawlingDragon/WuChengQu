@@ -109,7 +109,7 @@ export default {
       ismember: 0 //1是会员，不允许改名字，0可以修改
     };
   },
-  computed: { ...mapState(["uid", "mid"]) },
+  computed: { ...mapState(["token", "mid"]) },
   watch: {
     name(newVal, oldVal) {
       if (oldVal == "") {
@@ -240,7 +240,7 @@ export default {
       //分开上传
       this.$axios
         .fetchPost("Mobile/User/updateInfo", {
-          uId: this.uid,
+          token: this.token,
           gender: this.sex,
           realname: this.name,
           resideprovince: this.resideprovince,

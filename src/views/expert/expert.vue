@@ -199,12 +199,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "aiExpertId"])
+    ...mapState(["token", "aiExpertId"])
   },
   created() {},
   watch: {
     $route(newVal) {
-      (this.from = this.$route.query.from), (this.id = newVal.query.id);
+      this.from = this.$route.query.from;
+      this.id = newVal.query.id;
       this.page = 0;
       this.page2 = 0;
       this.page3 = 0;
@@ -244,10 +245,10 @@ export default {
     },
     getExpertData(id) {
       this.$axios
-        .fetchPost("Mobile/User/homepage", {
+        .fetchPost("Mobile/Expert/homepage", {
           from: this.from,
           id: id,
-          uId: this.uid
+          token: this.token
         })
         .then(res => {
           if (res.data.code == 0) {
@@ -268,7 +269,7 @@ export default {
       this.page += 1;
       this.noData = false;
       this.$axios
-        .fetchPost("/Mobile/User/getWenList", {
+        .fetchPost("/Mobile/Expert/getWenList", {
           uId: this.expertid,
           page: this.page,
           pagesize: 12,
@@ -291,7 +292,7 @@ export default {
       this.page2 += 1;
       this.noData2 = false;
       this.$axios
-        .fetchPost("/Mobile/User/getWenList", {
+        .fetchPost("/Mobile/Expert/getWenList", {
           uId: this.expertid,
           page: this.page2,
           pagesize: 12,
@@ -314,7 +315,7 @@ export default {
       this.page3 += 1;
       this.noData3 = false;
       this.$axios
-        .fetchPost("/Mobile/User/myJoinHospital", {
+        .fetchPost("/Mobile/Expert/myJoinHospital", {
           uId: this.expertid,
           page: this.page3
         })

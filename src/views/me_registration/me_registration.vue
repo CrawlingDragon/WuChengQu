@@ -36,7 +36,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["uid"])
+    ...mapState(["token"])
   },
   watch: {},
   mounted() {
@@ -46,7 +46,7 @@ export default {
     getRegistration() {
       this.noData = false;
       this.$axios
-        .fetchPost("/Mobile/User/getSubscribe", { uId: this.uid })
+        .fetchPost("/Mobile/User/getSubscribe", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.list = res.data.data;

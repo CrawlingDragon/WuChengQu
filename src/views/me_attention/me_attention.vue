@@ -50,7 +50,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid"])
+    ...mapState(["token"])
   },
   watch: {},
   mounted() {
@@ -62,7 +62,7 @@ export default {
       this.noDataHospital = false;
       this.$axios
         .fetchPost("Mobile/user/getFavoriteHospital", {
-          uId: this.uid,
+          token: this.token,
           pagesize: 40
         })
         .then(res => {
@@ -77,7 +77,7 @@ export default {
       this.noDataExpert = false;
       this.$axios
         .fetchPost("Mobile/user/getFavoriteExpert", {
-          uId: this.uid,
+          token: this.token,
           pagesize: 40
         })
         .then(res => {

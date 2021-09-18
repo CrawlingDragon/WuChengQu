@@ -1,6 +1,11 @@
 import axios from "axios";
 import QS from "qs";
+
+// import store from "./store";
+// import router from "./router";
+
 const ERR_OK = 0;
+
 axios.defaults.timeout = 8000;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=utf-8";
@@ -29,6 +34,11 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     //处理响应数据
+    // if (res.data.code == 510) {
+    //   // token过期操作
+    //   store.dispatch("cleanUserInfo");
+    //   router.push({ path: "/login" });
+    // }
     if (res.data.success) {
       return Promise.resolve(res);
     }
