@@ -117,7 +117,7 @@ export default {
     },
     confirmIssue(classid, uId) {
       axios
-        .fetchPost("/API/User/subFarmerDatacommit", { classid, uId })
+        .fetchPost("/Mobile/User/subFarmerDatacommit", { classid, uId })
         .then(res => {
           let data = res.data;
           if (data.code === 0) {

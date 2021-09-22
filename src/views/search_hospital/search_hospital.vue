@@ -86,7 +86,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid"])
+    ...mapState(["token"])
   },
   watch: {},
   mounted() {
@@ -122,7 +122,7 @@ export default {
         .fetchPost("Mobile/Entrance/lists", {
           keyword: keyword,
           location: this.location,
-          uId: this.uid
+          token: this.token
         })
         .then(res => {
           if (res.data.code == 0) {
@@ -136,7 +136,7 @@ export default {
     },
     getHispital() {
       this.$axios
-        .fetchPost("Mobile/Entrance/getHistory", { uId: this.uid })
+        .fetchPost("Mobile/Entrance/getHistory", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.hispital = res.data.data;
@@ -160,7 +160,7 @@ export default {
     },
     clearHispital() {
       this.$axios
-        .fetchPost("/Mobile/Entrance/clearRecord", { uId: this.uid })
+        .fetchPost("/Mobile/Entrance/clearRecord", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.$toast(res.data.message);

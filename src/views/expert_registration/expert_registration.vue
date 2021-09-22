@@ -97,7 +97,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["mid", "uid"])
+    ...mapState(["mid", "token"])
   },
   watch: {},
   mounted() {
@@ -129,7 +129,7 @@ export default {
       let obj = {
         mId: this.mid,
         eId: item.eid,
-        uId: this.uid,
+        token: this.token,
         ymd: item.ymd,
         apm: item.apm
       };

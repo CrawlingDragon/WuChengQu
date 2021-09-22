@@ -158,7 +158,7 @@ export default {
     getmanagementData() {
       // 获取农事管理数据
       axios
-        .fetchGet("/API/User/getBaseTasklists", {
+        .fetchGet("/Mobile/User/getBaseTasklists", {
           pId: this.pId,
           uId: this.uid
         })

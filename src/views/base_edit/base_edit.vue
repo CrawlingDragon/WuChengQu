@@ -264,7 +264,6 @@ export default {
     beforeRead(file) {
       return new Promise(resolve => {
         let img = exifImg(file).then(res => {
-          console.log("res :>> ", res);
           return res;
         });
         resolve(img);
@@ -272,9 +271,10 @@ export default {
     },
     afterRead(file, detail) {
       // 图片上传
+      console.log(file.file);
       let formData = new FormData();
       formData.append("urls[]", file.file);
-      this.$axios.fetchPost("/API/Wen/OssUploadFile", formData).then(res => {
+      this.$axios.fetchPost("/Mobile/Wen/OssUploadFile", formData).then(res => {
         if (res.data.code == 0) {
           this.imgList.push(res.data.data);
         } else {

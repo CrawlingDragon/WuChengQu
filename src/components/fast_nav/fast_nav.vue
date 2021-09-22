@@ -138,7 +138,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["initMid", "aiExpertId"])
+    ...mapState(["initMid", "aiExpertId", "token"])
   },
   methods: {
     ...mapMutations(["setMid"]),
@@ -165,12 +165,14 @@ export default {
         })
         .catch(() => {
           // on cancel
-          this.$axios.fetchPost("/Mobile/Login/logout").then(res => {
-            if (res.data.code == 0) {
-              this.cleanUserInfo();
-              this.$router.push({ path: "/login" });
-            }
-          });
+          this.$axios
+            .fetchPost("/Mobile/Logout/logout", { token: this.token })
+            .then(res => {
+              if (res.data.code == 0) {
+                this.cleanUserInfo();
+                this.$router.push({ path: "/login" });
+              }
+            });
           console.log(this.token);
         });
     },

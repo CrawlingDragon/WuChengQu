@@ -34,13 +34,15 @@ export default {
   unmounted() {},
   methods: {
     getBaseCenterList() {
-      axios.fetchGet("/API/User/getgbaselist", { uId: this.uid }).then(res => {
-        if (res.data.code == 0) {
-          this.baseList = res.data.data;
-        } else if (res.data.code === 201) {
-          this.noData = true;
-        }
-      });
+      axios
+        .fetchGet("/Mobile/User/getgbaselist", { uId: this.uid })
+        .then(res => {
+          if (res.data.code == 0) {
+            this.baseList = res.data.data;
+          } else if (res.data.code === 201) {
+            this.noData = true;
+          }
+        });
     },
     addBase() {
       this.$router.push({

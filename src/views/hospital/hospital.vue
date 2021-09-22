@@ -95,7 +95,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["uid", "mid", "isMember"])
+    ...mapState(["token", "mid", "isMember"])
   },
   watch: {},
   mounted() {
@@ -120,7 +120,7 @@ export default {
       this.$axios
         .fetchPost("Mobile/Mpublic/MpublicPage", {
           mId: mid,
-          uId: this.uid
+          token: this.token
         })
         .then(res => {
           let data = res.data.data;

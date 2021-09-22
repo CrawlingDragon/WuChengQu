@@ -63,7 +63,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState(["uid"]),
+    ...mapState(["token"]),
     letterList() {
       let arr = [];
       this.list.forEach(el => {
@@ -116,7 +116,7 @@ export default {
     },
     getCropList() {
       this.$axios
-        .fetchPost("Mobile/Mpublic/getCropIndexQuery", { uId: this.uid })
+        .fetchPost("Mobile/Mpublic/getCropIndexQuery", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.list = res.data.data;

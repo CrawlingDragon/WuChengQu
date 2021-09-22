@@ -268,7 +268,7 @@ export default {
       formData.append("urls[]", file.file);
       formData.append("uId", this.uid);
       formData.append("type", "company");
-      this.$axios.fetchPost("/API/Wen/OssUploadFile", formData).then(res => {
+      this.$axios.fetchPost("/Mobile/Wen/OssUploadFile", formData).then(res => {
         if (res.data.code == 0) {
           // this.imgList.push(res.data.data);
           this.uploader = [{ url: res.data.data_tiny }];
@@ -348,7 +348,7 @@ export default {
     },
     getBaseInfo() {
       axios
-        .fetchGet("/API/User/getCompanyinfo", { uId: this.uid })
+        .fetchGet("/Mobile/User/getCompanyinfo", { uId: this.uid })
         .then(res => {
           let data = res.data;
           if (data.code === 0) {
@@ -373,7 +373,7 @@ export default {
     },
     getChooseData() {
       // 基地选择数据
-      this.$axios.fetchGet("/API/User/getBaseOptions").then(res => {
+      this.$axios.fetchGet("/Mobile/User/getBaseOptions").then(res => {
         let data = res.data;
         if (data.code == 0) {
           this.ChooseData = data.data;
@@ -381,7 +381,7 @@ export default {
       });
     },
     getThreeTreeAddress() {
-      this.$axios.fetchGet("/API/User/getLinkagelist").then(res => {
+      this.$axios.fetchGet("/Mobile/User/getLinkagelist").then(res => {
         let data = res.data;
         if (data.code === 0) {
           // console.log("data.data :>> ", data.data);
@@ -392,7 +392,7 @@ export default {
     updataBaseInfo() {
       //更新基地信息/或者新建基地信息
       this.$axios
-        .fetchPost("/API/User/subCompanyAttention", {
+        .fetchPost("/Mobile/User/subCompanyAttention", {
           uId: this.uid,
           title: this.name,
           zwtype: this.zuowu,

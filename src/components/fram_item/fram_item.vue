@@ -70,11 +70,13 @@ export default {
         });
     },
     detetleHistory(id) {
-      this.$axios.fetchGet("/API/User/delfarmerdata", { Id: id }).then(res => {
-        if (res.data.code == 0) {
-          this.$emit("deteleHistory", id);
-        }
-      });
+      this.$axios
+        .fetchGet("/Mobile/User/delfarmerdata", { Id: id })
+        .then(res => {
+          if (res.data.code == 0) {
+            this.$emit("deteleHistory", id);
+          }
+        });
     },
     edit(id) {
       this.$router.push({

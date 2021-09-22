@@ -139,7 +139,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["mid", "uid", "initMid"]),
+    ...mapState(["mid", "token", "initMid"]),
     cropNumberBoolean() {
       let x = true;
       this.addList.forEach(item => {
@@ -362,7 +362,7 @@ export default {
       this.$axios
         .fetchPost("Mobile/Mpublic/joinMpublic", {
           mId: this.mid,
-          uId: this.uid,
+          token: this.token,
           username: this.name,
           mobile: this.phone,
           idcard: this.card,
@@ -411,7 +411,7 @@ export default {
     getUserInfo() {
       this.$axios
         .fetchPost("Mobile/User/userCenter", {
-          uId: this.uid,
+          token: this.token,
           mId: this.mid
         })
         .then(res => {
@@ -424,7 +424,7 @@ export default {
       this.$axios
         .fetchPost("Mobile/Mpublic/MpublicPage", {
           mId: this.mid,
-          uId: this.uid
+          token: this.token
         })
         .then(res => {
           if (res.data.code == 0) {
