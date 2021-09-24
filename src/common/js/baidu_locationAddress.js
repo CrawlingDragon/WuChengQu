@@ -1,5 +1,4 @@
 import BMapGL from "BMapGL";
-import storage from "good-storage";
 
 export function getCityAddress() {
   // ip定位，获取市
@@ -20,9 +19,9 @@ export function geolocation() {
     geolocation.getCurrentPosition(function(r) {
       if (this.getStatus() == 0) {
         let address = r.address;
+
         resolve(address);
       } else {
-        storage.session.set("localStatus", this.getStatus());
         resolve("定位失败");
         console.log("failed :>> ", this.getStatus());
       }

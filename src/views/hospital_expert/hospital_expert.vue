@@ -3,7 +3,7 @@
     <Header header="indexHeader" navHeader="专家"></Header>
     <ul class="expert-ul" v-if="!noData">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"

@@ -30,7 +30,7 @@
       <div class="title">线上网诊</div>
       <ul class="online-ul">
         <van-list
-          v-model="loading"
+          v-model:loading="loading"
           :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"

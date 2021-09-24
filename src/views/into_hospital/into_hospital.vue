@@ -43,6 +43,7 @@ import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
 import { inToHospitalLocal } from "@/common/js/into_hospital_local";
 import { useMeta } from "vue-meta";
+import storage from "good-storage";
 const defaultCity = "婺城区";
 export default {
   setup() {
@@ -66,7 +67,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "mid"])
+    ...mapState(["token", "mid"])
   },
   watch: {},
   created() {},
@@ -78,7 +79,13 @@ export default {
   },
   methods: {
     async getaddress() {
-      let address = await inToHospitalLocal(defaultCity);
+      let address = storage.session.get("localStatus", "");
+
+      if (address !== "localFailed" && address !== "") {
+        address = storage.session.get("localStatus");
+      } else {
+        address = await inToHospitalLocal(defaultCity);
+      }
       this.location = address.axiosText;
       this.address = address.text;
       setTimeout(() => {
@@ -88,7 +95,7 @@ export default {
     getList() {
       this.$axios
         .fetchPost("Mobile/Entrance/index", {
-          uId: this.uid,
+          token: this.token,
           location: this.location
         })
         .then(res => {

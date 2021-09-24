@@ -4,7 +4,7 @@
     <HeaderHospital navHeader="测土配方" v-else></HeaderHospital>
     <ul class="cetu_ul" v-show="!noData">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"

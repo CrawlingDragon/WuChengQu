@@ -3,7 +3,7 @@
     <Header :indexHeader="false"></Header>
     <ul class="expert-ul">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
@@ -52,7 +52,7 @@ export default {
       // 获取专家列表
       this.page += 1;
       this.$axios
-        .fetchPost("/Mobile/User/expertList", {
+        .fetchPost("Mobile/Expert/expertList", {
           mId: this.mid,
           pagesize: 8,
           page: this.page,

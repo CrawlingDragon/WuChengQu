@@ -98,7 +98,7 @@
         <van-empty description="暂无解答" v-if="noData" />
         <ul class="answer-ul" v-else>
           <van-list
-            v-model="loading"
+            v-model:loading="loading"
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad"
@@ -115,7 +115,7 @@
         <van-empty description="暂无提问" v-if="noData2" />
         <ul class="answer-ul" v-show="id != aiExpertId" v-else>
           <van-list
-            v-model="loading2"
+            v-model:loading="loading2"
             :finished="finished2"
             finished-text="没有更多了"
             @load="onLoad2"
@@ -132,9 +132,8 @@
         <van-empty description="暂未加入中心" v-if="noData3" />
         <ul class="hospital-ul" v-show="id != aiExpertId" v-else>
           <van-list
-            v-model="loading3"
+            v-model:loading="loading3"
             :finished="finished3"
-            finished-text="没有更多了"
             @load="onLoad3"
             :immediate-check="false"
           >
@@ -283,6 +282,7 @@ export default {
             if (this.page == 1) {
               this.noData = true;
             }
+            this.loading = false;
             this.finished = true;
           }
         });
@@ -300,12 +300,13 @@ export default {
         })
         .then(res => {
           if (res.data.code == 0) {
-            this.loading = false;
+            this.loading2 = false;
             this.askMeList = res.data.data;
           } else if (res.data.code == 201) {
             if (this.page2 == 1) {
               this.noData2 = true;
             }
+            this.finished2 = false;
             this.finished2 = true;
           }
         });
@@ -327,6 +328,7 @@ export default {
             if (this.page3 == 1) {
               this.noData3 = true;
             }
+            this.loading3 = false;
             this.finished3 = true;
           }
         });
@@ -541,17 +543,17 @@ export default {
         &:last-child
           border none
     .hospital-ul
-      column-count 2
-      column-gap 0
-      padding-top 15px
-      margin-left 12px
-      padding-bottom 40px
-      position relative
+      margin-left: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       li
-        break-inside avoid
-        padding-right 12px
-        margin-bottom 10px
-        vertical-align top
+        display: inline-block;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        width 50%
+        height: 285px;
+        vertical-align: top;
+        position: relative;
       /deep/.van-list__finished-text
         position absolute
         bottom 0

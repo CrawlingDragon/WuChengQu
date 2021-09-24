@@ -47,7 +47,7 @@ export default {
     getList() {
       this.noData = false;
       this.$axios
-        .fetchPost("Mobile/user/myJoinHospital", { token: this.token })
+        .fetchPost("Mobile/Expert/myJoinHospital", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.list = res.data.data.list;

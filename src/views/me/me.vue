@@ -34,6 +34,7 @@
         title="我的基地"
         :to="{ path: '/base_detail', query: { id: info.bid } }"
         is-link
+        v-if="false"
       >
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <template #icon>
@@ -70,6 +71,7 @@
       :to="{ path: '/invite_expert' }"
       is-link
       style="margin-top:10px"
+      v-if="info.identity === 1"
     >
       <!-- 使用 right-icon 插槽来自定义右侧图标 -->
       <template #icon>

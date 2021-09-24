@@ -358,12 +358,15 @@ export default {
         &:last-child
           border none
     .hospital-ul
-      column-count 2
-      column-gap 0
-      padding-top 15px
-      margin-left 12px
+      margin-left: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       li
-        break-inside avoid
-        padding-right 12px
-        margin-bottom 10px
+        display: inline-block;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        width 50%
+        height: 285px;
+        vertical-align: top;
+        position: relative;
 </style>

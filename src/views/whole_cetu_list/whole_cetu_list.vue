@@ -40,10 +40,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["mid", "uid", "initMid"])
+    ...mapState(["mid", "token", "initMid"])
   },
   watch: {},
   mounted() {
+    // this.getMeList();
     this.getList();
   },
   methods: {
@@ -51,8 +52,9 @@ export default {
       // 获取测土配方列表 医院
       this.noData = false;
       this.$axios
-        .fetchPost("/Mobile/Treatment/getTestingsoil", {
-          uId: this.uid
+        .fetchPost("Mobile/Treatment/getTestingsoil", {
+          token: this.token,
+          mId: this.initMid
         })
         .then(res => {
           if (res.data.code == 0) {
@@ -62,10 +64,10 @@ export default {
           }
         });
     },
-    getMeList(uid) {
+    getMeList() {
       // 获取测土配方列表  个人
       this.$axios
-        .fetchPost("/Mobile/Treatment/getTestingsoil", { uId: uid })
+        .fetchPost("/Mobile/Treatment/getTestingsoil", { token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.list = res.data.data;

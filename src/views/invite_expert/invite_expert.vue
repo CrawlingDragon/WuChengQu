@@ -4,67 +4,117 @@
     <li
       v-for="item in list"
       :key="item"
-      :class="{ 'agree-li': item.agree, 'refuse-li': item.refuse }"
+      :class="{ 'agree-li': item.passed == 1, 'refuse-li': item.passed == 2 }"
     >
-      <div class="time">2020-09-03 12:00</div>
+      <div class="time">{{ item.addtime }}</div>
       <div class="mid">
-        <van-image class="img" fit="contain" @click="goToCenter"></van-image>
+        <van-image
+          class="img"
+          fit="contain"
+          @click="goToCenter"
+          :src="item.logo"
+        ></van-image>
         <div class="name" @click="goToCenter">
           <div class="center-name">
-            坎墩运营中心坎墩运营中心坎墩运营中心坎墩运营中心
+            {{ item.name }}
           </div>
           <div class="small-title">邀请您成为运营中心专家</div>
         </div>
       </div>
-      <div class="btns van-hairline--top">
-        <div class="btn agree" v-if="item.agree" @click="agree">同意</div>
-        <div class="btn refuse" v-if="item.refuse" @click="refuse">拒绝</div>
+      <div class="btns van-hairline--top" v-if="item.passed == 0">
+        <div class="btn agree" @click="agree(item.id, 1, item.name)">
+          同意
+        </div>
+        <div class="btn refuse" @click="agree(item.id, 2, item.name)">
+          拒绝
+        </div>
+      </div>
+      <div class="btns van-hairline--top" v-else>
+        <div class="btn agree" v-if="item.passed == 1">
+          同意
+        </div>
+        <div class="btn refuse disbaled" v-if="item.passed == 2">
+          拒绝
+        </div>
       </div>
     </li>
   </ul>
+  <van-empty description="暂无数据" v-if="noData"></van-empty>
 </template>
 
 <script setup>
 import Header from "@/components/header/header";
-import { ref } from "vue";
+import { ref, computed, onMounted, getCurrentInstance } from "vue";
 import { Toast, Dialog } from "vant";
 import { useMeta } from "vue-meta";
-const list = ref([
-  { agree: true, refuse: false },
-  { agree: false, refuse: true }
-]);
+import { useStore } from "vuex";
+
+const list = ref([]);
+const noData = ref(false);
+const store = useStore();
+const currentInstance = getCurrentInstance();
+const global = currentInstance.appContext.config.globalProperties;
 useMeta({
   title: "邀请专家"
 });
-function agree() {
-  Dialog.confirm({
-    message: "确定同意xx运营中心的专家邀请吗",
-    confirmButtonText: "取消",
-    cancelButtonText: "确定"
-  })
-    .then(() => {
-      // on confirm
-    })
-    .catch(() => {
-      // on cancel
-      Toast("已同意");
-    });
-}
-function refuse() {
-  Dialog.confirm({
-    message: "确定拒绝xx运营中心的专家邀请吗",
-    confirmButtonText: "取消",
-    cancelButtonText: "确定"
-  })
-    .then(() => {
-      // on confirm
-    })
-    .catch(() => {
-      // on cancel
-      Toast("已拒绝");
-    });
-}
+const token = computed(() => store.state.token);
 
+function getDataList() {
+  global.$axios
+    .fetchPost("Mobile/User/getMyInvite", { token: token.value })
+    .then(res => {
+      if (res.data.code === 0) {
+        list.value = res.data.data;
+      } else {
+        noData.value = true;
+      }
+    });
+}
+onMounted(() => {
+  getDataList();
+});
+function agree(id, passed, name) {
+  Dialog.confirm({
+    message: `确定${passed == 1 ? "同意" : "拒绝"}${name}的专家邀请吗`,
+    confirmButtonText: "取消",
+    cancelButtonText: "确定"
+  })
+    .then(() => {
+      // on confirm
+    })
+    .catch(() => {
+      // on cancel
+      passedAxiosFn(id, passed);
+      // Toast("已同意");
+    });
+}
+// function refuse(id, passed, name) {
+//   Dialog.confirm({
+//     message: `确定拒绝${name}的专家邀请吗`,
+//     confirmButtonText: "取消",
+//     cancelButtonText: "确定"
+//   })
+//     .then(() => {
+//       // on confirm
+//     })
+//     .catch(() => {
+//       // on cancel
+//       passedAxiosFn(id, passed);
+//     });
+// }
+function passedAxiosFn(id, passed) {
+  global.$axios
+    .fetchPost("Mobile/User/doMyInvite", { token: token.value, id, passed })
+    .then(res => {
+      if (res.data.code === 0) {
+        getDataList();
+        let msg = passed == 1 ? "已同意" : "已拒绝";
+        Toast(msg);
+      } else {
+        Toast(res.data.message);
+      }
+    });
+}
 function goToCenter() {
   //去到对应的中心
 }
@@ -86,6 +136,8 @@ function goToCenter() {
         color #fff !important
         background #B8B8B8 !important
         border none !important
+      .disabled
+        color red
     .time
       height 40px
       line-height 40px
@@ -104,7 +156,7 @@ function goToCenter() {
         margin-right 10px
       .name
         display flex
-        justify-content  center
+        justify-content  space-around
         color: #333333;
         flex-direction column
         flex 1
@@ -126,11 +178,12 @@ function goToCenter() {
         text-align center
         border-radius: 4px;
         &.agree
-          margin-right 15px
+
           background $theme-color
           color #fff
         &.refuse
           color #ff6600
+          margin-left 15px
           border 1px solid #ff6600
           background #fff
 </style>

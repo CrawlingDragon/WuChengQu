@@ -67,6 +67,7 @@ export default {
   position relative
   padding-bottom 15px
   background #F5F5F5
+  height 100%
   .image
     width 100%
     height 140px
@@ -93,12 +94,13 @@ export default {
     line-height 16px
     padding-left 10px
   .number
-    font-size 12px
-    color #343434
-    margin-top 10px
-    display flex
-    align-items center
-    padding-left 10px
+    position: absolute;
+    font-size: 12px;
+    color: #343434;
+    bottom: 15px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
     .expert
       margin-right 10px
     .online

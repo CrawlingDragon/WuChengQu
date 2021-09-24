@@ -4,7 +4,7 @@
     <div class="title">共{{ this.$route.query.time }}次{{ crop }}网诊记录</div>
     <ul class="crop-ul">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"

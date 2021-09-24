@@ -3,7 +3,7 @@
     <Header :indexHeader="false"></Header>
     <ul class="video-ul">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"

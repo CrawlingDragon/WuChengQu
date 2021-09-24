@@ -30,7 +30,7 @@
         :rules="[{ required: true }]"
       />
       <van-action-sheet
-        v-model="sexShow"
+        v-model:show="sexShow"
         :actions="actions"
         @select="onSelectSex"
       />
@@ -39,13 +39,13 @@
         required
         clickable
         name="area"
-        :value="address"
+        v-model="address"
         label="地区选择"
         placeholder="点击选择省市区"
         @click="showArea = true"
         :rules="[{ required: true }]"
       />
-      <van-popup v-model="showArea" position="bottom">
+      <van-popup v-model:show="showArea" position="bottom">
         <van-area
           :area-list="areaList"
           @confirm="onConfirm"
@@ -93,7 +93,7 @@
       </div>
       <div class="add-btn" @click="add"><span>+</span>添加作物</div>
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
+        <van-button round block type="info" native-type="submit" class="subBtn">
           提交会员申请
         </van-button>
       </div>
@@ -308,6 +308,7 @@ export default {
       this.sexShow = false;
     },
     onConfirm(values) {
+      console.log(values);
       this.address = values.map(item => item.name).join("/");
       this.province = values[0].name;
       this.city = values[1].name;
@@ -485,4 +486,7 @@ export default {
     text-align center
     margin 18px 0 0
     padding-bottom 18px
+  .subBtn
+    background $theme-color
+    color #fff
 </style>

@@ -149,7 +149,7 @@ export default {
       this.page1 += 1;
       // 我问的
       this.$axios
-        .fetchPost("/Mobile/user/getWenList", {
+        .fetchPost("Mobile/Expert/getWenList", {
           token: this.token,
           action: "ask",
           page: this.page1
@@ -171,7 +171,7 @@ export default {
       // 我答的
       this.page2 += 1;
       this.$axios
-        .fetchPost("/Mobile/user/getWenList", {
+        .fetchPost("Mobile/Expert/getWenList", {
           token: this.token,
           page: this.page2,
           action: "answer"
@@ -193,7 +193,7 @@ export default {
       // 咨询我的
       this.page3 += 1;
       this.$axios
-        .fetchPost("/Mobile/user/getWenList", {
+        .fetchPost("Mobile/Expert/getWenList", {
           token: this.token,
           action: "tome",
           page: this.page3
@@ -214,7 +214,7 @@ export default {
     getUserInfo() {
       this.$axios
         .fetchPost("Mobile/User/userCenter", {
-          uId: this.uid,
+          token: this.token,
           mId: this.initMid
         })
         .then(res => {

@@ -28,7 +28,6 @@
           <p>找农资</p>
         </a>
       </div>
-
       <router-link to="/into_hospital" class="item">
         <div class="icon i5"></div>
         <p>找中心</p>
@@ -257,17 +256,17 @@ export default {
         color #9A9A9A
         font-size 12px
     .h-ul
-      padding-top 10px
-      padding-bottom 10px
-      height auto
-      column-count 2
-      column-gap 0
-      margin-left 12px
-      border-bottom 1px solid #e5e5e5
+      margin-left: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
       li
-        break-inside avoid
-        padding-right 12px
-        padding-bottom 10px
+        display: inline-block;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        width 50%
+        height: 285px;
+        vertical-align: top;
+        position: relative;
   .look-bar
     height 40px
     text-align center

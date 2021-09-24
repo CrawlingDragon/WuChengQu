@@ -3,7 +3,7 @@
     <HospitalHeader indexHeader="indexHeader" navHeader="资讯"></HospitalHeader>
     <ul class="message-ul" v-if="!noData">
       <van-list
-        v-model="loading"
+        v-model:loading="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"

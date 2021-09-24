@@ -33,7 +33,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "initMid"])
+    ...mapState(["token", "initMid"])
   },
   watch: {},
   created() {},
@@ -45,7 +45,8 @@ export default {
       this.noData = false;
       this.$axios
         .fetchPost("/Mobile/Treatment/getWenzhen", {
-          uId: this.uid
+          token: this.token,
+          mId: this.initMid
         })
         .then(res => {
           if (res.data.code == 0) {

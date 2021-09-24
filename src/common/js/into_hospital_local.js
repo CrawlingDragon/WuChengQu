@@ -1,5 +1,6 @@
 import { geolocation } from "./baidu_locationAddress";
 import { Dialog } from "vant";
+import storage from "good-storage";
 export async function inToHospitalLocal(defaultCity) {
   //进院的定位
   let address = await geolocation();
@@ -24,6 +25,7 @@ export async function inToHospitalLocal(defaultCity) {
           axiosText: axiosText
         };
       }
+      storage.session.set("localStatus", obj);
     } else {
       Dialog.alert({
         message: `定位失败,已自动切换到${defaultCity}`,
@@ -34,6 +36,7 @@ export async function inToHospitalLocal(defaultCity) {
         text: defaultCity,
         axiosText: "浙江省," + defaultCity
       };
+      storage.session.set("localStatus", "localFailed");
     }
     resolve(obj);
   });
