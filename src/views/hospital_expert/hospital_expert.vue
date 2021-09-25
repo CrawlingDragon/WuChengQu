@@ -52,7 +52,7 @@ export default {
     getList() {
       this.page += 1;
       this.$axios
-        .fetchPost("Mobile/User/expertList", {
+        .fetchPost("Mobile/Expert/expertList", {
           mId: this.mid,
           page: this.page,
           isall: "self"

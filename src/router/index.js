@@ -316,6 +316,11 @@ const routes = [
       )
   },
   {
+    path: "/about_us",
+    component: () =>
+      import(/* webpackChunkName:"about_us" */ "@/views/about_us/about_us")
+  },
+  {
     path: "/me",
     name: "me",
     component: () => import(/*webpackChunkName:"me" */ "@/views/me/me")
@@ -419,6 +424,7 @@ const routes = [
         /* webpackChunkName:"cropRecord" */ "@/views/base_center/crop_record/crop_record"
       )
   },
+
   {
     path: "/base_edit",
     component: () =>
@@ -507,7 +513,6 @@ router.beforeEach((to, from, next) => {
     to.name == "me_hospital" ||
     to.name == "me_registration"
   ) {
-    console.log(store.state.token);
     if (store.state.token == "") {
       next({
         path: "/login"

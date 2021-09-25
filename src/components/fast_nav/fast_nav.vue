@@ -8,21 +8,24 @@
       <div class="small-title">新型庄稼医院</div>
       <van-grid :column-num="4" :border="false" style="">
         <van-grid-item>
-          <div class="p" @click="goToHospital">找医院</div>
+          <div class="p" @click="goToHospital">找中心</div>
         </van-grid-item>
-        <van-grid-item @click="goToExpert">
+        <van-grid-item @click="goToAnswer">
+          <div class="p">找答案</div>
+        </van-grid-item>
+        <!-- <van-grid-item @click="goToExpert">
           <div class="p">找专家</div>
+        </van-grid-item> -->
+        <van-grid-item @click="lookForStore()">
+          <div class="p">找农资</div>
         </van-grid-item>
-        <van-grid-item @click="goToBase">
-          <div class="p">找基地</div>
-        </van-grid-item>
-        <van-grid-item>
-          <a :href="shareUrl" class="p" target="_blank">专享商城</a>
+        <van-grid-item @click="goToAsk">
+          <div class="p">提问</div>
         </van-grid-item>
       </van-grid>
       <van-grid :column-num="4" :border="false">
-        <van-grid-item @click="goToAnswer">
-          <div class="p">找答案</div>
+        <van-grid-item v-if="false">
+          <a :href="shareUrl" class="p" target="_blank">专享商城</a>
         </van-grid-item>
         <van-grid-item @click="goToZuoXun">
           <div class="p">坐诊巡诊</div>
@@ -30,15 +33,12 @@
         <van-grid-item @click="goToCetu">
           <div class="p">测土配方</div>
         </van-grid-item>
-        <van-grid-item @click="goToAsk">
-          <div class="p">提问</div>
-        </van-grid-item>
       </van-grid>
     </div>
     <div class="nav-list">
       <div class="small-title">平台服务</div>
       <van-grid :column-num="4" :border="false">
-        <van-grid-item>
+        <van-grid-item v-if="false">
           <a :href="fromStoreUrl" class="p" target="_blank">农资商城</a>
         </van-grid-item>
         <van-grid-item @click="goToVideo">
@@ -47,21 +47,20 @@
         <van-grid-item @click="goToDiseases">
           <div class="p">病虫害</div>
         </van-grid-item>
-        <van-grid-item @click="goToLive">
-          <div class="p">直播</div>
-        </van-grid-item>
-      </van-grid>
-      <van-grid :column-num="4" :border="false">
         <van-grid-item>
           <div class="p" @click="goToMessage">资讯</div>
         </van-grid-item>
         <van-grid-item @click="goToAi">
           <div class="p">AI智能专家</div>
         </van-grid-item>
+        <van-grid-item @click="goToLive" v-if="false">
+          <div class="p">直播</div>
+        </van-grid-item>
+      </van-grid>
+      <van-grid :column-num="4" :border="false">
         <van-grid-item @click="goToAboutUs">
           <div class="p">关于我们</div>
         </van-grid-item>
-        <van-grid-item> </van-grid-item>
       </van-grid>
     </div>
     <div class="btns" v-if="!token">
@@ -92,6 +91,8 @@ import { mapState, mapMutations, mapActions, useStore } from "vuex";
 import { Dialog } from "vant";
 import { computed, ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import lookForStoreFn from "@/common/js/lookForStore.js";
+
 export default {
   props: {
     showFlag: {
@@ -112,6 +113,12 @@ export default {
       pathName.value = route.name;
     });
 
+    // hooks
+    // 找农资hook
+    const { lookForStore } = lookForStoreFn(hide);
+    function hide() {
+      emit("update:showFlag", false);
+    }
     function goToLogin() {
       if (pathName.value == "Login") {
         emit("update:showFlag", false);
@@ -126,6 +133,8 @@ export default {
       avatar,
       token,
       pathName,
+      lookForStore,
+      hide,
       goToLogin
     };
   },
@@ -349,7 +358,7 @@ export default {
       height 20px
       margin-left 15px
       margin-right 5px
-      background url('./1.png') no-repeat
+      background url('../../assets/logo.png') no-repeat
       background-size 100% 100%
       background-position center
 </style>

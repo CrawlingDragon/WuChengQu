@@ -19,14 +19,10 @@
         <p>找答案</p>
       </router-link>
       <div class="item">
-        <a
-          :href="shareStoreUrl"
-          target="_blank"
-          style="display:block;color:#000;"
-        >
+        <div @click="lookForStore" style="display:block;color:#000;">
           <div class="icon i2"></div>
           <p>找农资</p>
-        </a>
+        </div>
       </div>
       <router-link to="/into_hospital" class="item">
         <div class="icon i5"></div>
@@ -64,24 +60,28 @@
 import Header from "@/components/header/header.vue";
 import RecommendHospital from "@/components/recommend_hospital/recommend_hospital";
 import OnlineItem from "@/components/online_item/online_item";
+import Foot from "@/components/foot/foot";
 import { ImagePreview } from "vant";
 import { mapState } from "vuex";
-import Foot from "@/components/foot/foot";
 import { useMeta } from "vue-meta";
-
+import lookForStoreFn from "@/common/js/lookForStore.js";
 export default {
   setup() {
+    const { lookForStore } = lookForStoreFn();
+
     useMeta({
       title: "为农服务平台"
     });
+    return {
+      lookForStore
+    };
   },
   name: "index",
   components: {
     Header,
     RecommendHospital,
     OnlineItem,
-    Foot,
-    [ImagePreview.Component.name]: ImagePreview.Component
+    Foot
   },
   props: {},
   data() {
@@ -91,7 +91,7 @@ export default {
       expertArr: [],
       onlineArr: [],
       scrollInit: false,
-      shareStoreUrl: process.env.VUE_APP_SHARE_URL,
+      // shareStoreUrl: process.env.VUE_APP_SHARE_URL,
       h: 0
     };
   },
@@ -99,12 +99,22 @@ export default {
   computed: {
     ...mapState(["initMid", "token"])
   },
-  watch: {},
+  watch: {
+    token() {
+      this.initSwiperHeight();
+      this.getIndexData();
+      window.addEventListener("resize", this.initSwiperHeight);
+    }
+  },
   mounted() {
     this.initSwiperHeight();
     this.getIndexData();
     window.addEventListener("resize", this.initSwiperHeight);
   },
+  unMounted() {
+    window.removeEventListener("resize", this.initSwiperHeight);
+  },
+
   // unmounted() { window.removeEventListener('scroll', this.scrollHandler)},
   methods: {
     initSwiperHeight() {

@@ -32,14 +32,16 @@
             text="优质基地"
             @click="goToGoodBase"
             v-if="hospitalIsStore == 1"
+            v-show="false"
           />
+          <van-grid-item text="店铺" @click="goToShop" />
           <van-grid-item
             text="会员提问"
             @click="goToAsk"
             v-if="hospitalIsStore == 1"
           />
-          <van-grid-item text="店铺" @click="goToShop" />
-          <van-grid-item text="直播" @click="goToLive" />
+
+          <van-grid-item text="直播" @click="goToLive" v-if="false" />
           <van-grid-item text="简介" @click="goToIntro" />
         </van-grid>
       </div>
