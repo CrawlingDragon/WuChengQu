@@ -23,7 +23,7 @@
       </div>
       <div class="no_index_header" v-if="!indexHeader" @click="clickLogo">
         <van-image :src="require('@/assets/logo.png')" class="logo"></van-image>
-        婺城区为农服务平台首页
+        为农服务平台
       </div>
       <div class="right-nav van-hairline--left">
         <div class="index-icon" @click.stop="goToIndex">

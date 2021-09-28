@@ -8,7 +8,7 @@
       </div>
       <div class="left-bar" v-if="header == 'logoHeader'">
         <van-image class="logo" :src="require('./1.png')"></van-image>
-        <div class="p2">婺城区为农服务平台首页</div>
+        <div class="p2">为农服务平台首页</div>
       </div>
       <div class="left-bar" v-if="header == 'searchHeader'">
         <van-icon name="location-o" class="address-icon" />

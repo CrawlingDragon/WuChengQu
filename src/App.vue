@@ -29,7 +29,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["uid", "initMid", "logined"])
+    ...mapState(["token", "initMid", "logined"])
   },
   watch: {
     uid() {
@@ -41,20 +41,6 @@ export default {
     this.getAiId();
   },
   methods: {
-    getCookie(cname) {
-      var name = cname + "=";
-      var ca = document.cookie.split(";");
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    },
     ...mapMutations([
       "setIsMember",
       "setUserName",
@@ -63,12 +49,12 @@ export default {
       "setLogined"
     ]),
     getUserInfo() {
-      if (this.uid == undefined) {
+      if (!this.token) {
         return;
       }
       this.$axios
         .fetchPost("Mobile/User/userCenter", {
-          uId: this.uid,
+          token: this.token,
           mId: this.initMid
         })
         .then(res => {

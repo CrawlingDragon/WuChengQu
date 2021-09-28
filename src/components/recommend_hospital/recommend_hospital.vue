@@ -3,7 +3,7 @@
   <div class="recommend-hospital-wrap" @click="goToIndexHospital">
     <van-image :src="list.logo" fit="cover" class="image" lazy-load />
     <p class="p1">{{ list.title }}</p>
-    <p class="p2">{{ list.level }}·{{ list.issort }}医院</p>
+    <p class="p2">{{ list.level }}·{{ list.issort }}</p>
     <p class="p3" v-show="list.zuowu != '暂未设置'">科室：{{ list.zuowu }}</p>
     <div class="number">
       <div class="expert" v-if="list.num_expert != 0">
@@ -26,7 +26,6 @@
         网诊 {{ list.num_wen }}
       </div>
     </div>
-    <div class="icon" v-show="list.isstore == 1"></div>
   </div>
 </template>
 <script>

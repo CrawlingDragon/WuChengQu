@@ -43,7 +43,7 @@
       </li>
     </ul>
     <van-dialog
-      v-model="nameShow"
+      v-model:show="nameShow"
       title="修改名字"
       show-cancel-button
       @confirm="confirmName"
@@ -56,10 +56,14 @@
         maxlength="10"
       />
     </van-dialog>
-    <van-action-sheet v-model="sexShow" :actions="actions" @select="onSelect" />
+    <van-action-sheet
+      v-model:show="sexShow"
+      :actions="actions"
+      @select="onSelect"
+    />
     <!-- 选择性别 -->
     <van-popup
-      v-model="areaShow"
+      v-model:show="areaShow"
       close-icon-position="top-left"
       position="bottom"
     >
@@ -204,7 +208,7 @@ export default {
         // console.log('res.filePress :>> ', res.filePress);
         // console.log('file.file :>> ', file.file);
         formData.append("urls[]", res.filePress);
-        formData.append("uId", this.uid);
+        formData.append("token", this.token);
         this.$axios
           .fetchPost("/Mobile/Wen/OssUploadFile", formData)
           .then(res => {
@@ -220,7 +224,10 @@ export default {
     },
     getInfo() {
       this.$axios
-        .fetchPost("/Mobile/User/userCenter", { uId: this.uid, mId: this.mid })
+        .fetchPost("/Mobile/User/userCenter", {
+          token: this.token,
+          mId: this.mid
+        })
         .then(res => {
           if (res.data.code == 0) {
             let data = res.data.data;

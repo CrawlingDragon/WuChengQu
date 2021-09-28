@@ -1,31 +1,18 @@
 <template>
-  <div class="about-us">
-    <Header :indexHeader="false"></Header>
-    <div class="content">
-      <p class="p1">
-        绍兴市供销社（农合联）线上为农服务平台，包括电脑端、手机端，实现数字化会员管理、层级管理、服务数据监控、数据统计分析等功能，为农民提供在线问诊、病虫害图库、视频培训、人工智能识别、在线直播、土壤检测、优质农资商品交易等服务。
-      </p>
-      <p class="p1">
-        绍兴市供销社（农合联）为农服务平台上的数据接入到省农合联平台，纳入浙江省供销社（农合联）庄稼医院为农服务体系内，同时，为绍兴市下属各个区县开发接入端口，下属各区县的服务数据归集到绍兴市供销社（农合联）为农服务平台上，以便于绍兴市供销社（农合联）对下属各个区县服务情况进行监督、考核和管理，实现绍兴地区庄稼医院一体化。
-      </p>
-      <van-image class="img" fit="cover" :src="require('./us.png')"></van-image>
-    </div>
-    <div class="bottom">
-      <div class="small-title">申请开通庄稼医院，系统性服务会员</div>
-      <div class="number">
-        已开通
-        <div class="num" v-for="item in mpnum" :key="item.id">{{ item }}</div>
-        家医院
+  <teleport to="body">
+    <div class="about-us">
+      <Header :indexHeader="false"></Header>
+      <div class="content">
+        <p class="p1">
+          婺城区数字乡村运营中心根据建设场地和运营主体实际情况，围绕当地主导产业（采用新建或改造升级的方式）进行数字乡村服务体系建设。
+        </p>
+        <p class="p1">
+          依靠益农信息社升级到数字乡村服务体系，成为数字乡村运营服务中心的标配，设立专家坐诊区、农资展示展销区、接待区，功能体验及远程视频诊疗区，在此基础上依托浙农检测机构，选择有代表性的益农信息社增设土壤速测仪建立测土配方区，并可以在偏远或服务边缘地区设立村级服务点，服务覆盖婺城区所有涉农街道及乡镇，体现良好的经济效益和社会效益。
+        </p>
+        <!-- <van-image class="img" fit="cover" :src="require('./us.png')"></van-image> -->
       </div>
-      <div class="btn" @click="call">申请开通庄稼医院</div>
     </div>
-    <div class="tip">
-      <p class="p2">绍兴市已开通{{ us.mpnum }}家庄稼医院</p>
-      <p class="p2">收录{{ us.enum }}位专家</p>
-      <p class="p2">累积处方{{ us.rnum }}次</p>
-    </div>
-    <a :href="'tel:' + tel" ref="tel"></a>
-  </div>
+  </teleport>
 </template>
 <script>
 import Header from "@/components/header/header";
@@ -95,9 +82,15 @@ export default {
 <style lang="stylus" scoped>
 .about-us
   padding-bottom 40px
+  background #fff
+  height 100%
+  position fixed
+  left 0
+  right 0
+  top 50px
+  bottom 0
   .content
     margin-top 10px
-    background #fff
     padding 15px 12px
     .p1
       color #333

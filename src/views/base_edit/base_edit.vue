@@ -137,7 +137,7 @@
             native-type="submit"
             class="submit"
             color="#155BBB"
-            >发布</van-button
+            >{{ id ? "保存" : "发布" }}</van-button
           >
         </div>
       </van-form>

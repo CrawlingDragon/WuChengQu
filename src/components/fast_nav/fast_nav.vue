@@ -5,7 +5,7 @@
       <van-icon name="cross" class="van-hairline--left" @click="closeBox" />
     </div>
     <div class="nav-list">
-      <div class="small-title">新型庄稼医院</div>
+      <div class="small-title">数字乡村运营中心</div>
       <van-grid :column-num="4" :border="false" style="">
         <van-grid-item>
           <div class="p" @click="goToHospital">找中心</div>
@@ -81,8 +81,10 @@
       <div class="login-out" @click="loginOut">退出登录</div>
     </div>
     <div class="index-btn" @click="goToIndex">
-      <div class="logo"></div>
-      婺城区为农服务平台首页
+      <div class="btn-content">
+        <div class="logo"></div>
+        <div class="name">为农服务平台首页</div>
+      </div>
     </div>
   </div>
 </template>
@@ -115,7 +117,10 @@ export default {
 
     // hooks
     // 找农资hook
-    const { lookForStore } = lookForStoreFn(hide);
+    const { lookForStore } = lookForStoreFn(
+      process.env.VUE_APP_SHARE_URL,
+      hide
+    );
     function hide() {
       emit("update:showFlag", false);
     }
@@ -182,7 +187,7 @@ export default {
                 this.$router.push({ path: "/login" });
               }
             });
-          console.log(this.token);
+          // console.log(this.token);
         });
     },
     goToIndex() {
@@ -216,12 +221,24 @@ export default {
     },
     goToZuoXun() {
       //  去坐诊巡诊页面，和我的坐诊巡诊页面是一样
+      const path = this.$route.path;
+      if (path === "/login") {
+        this.$emit("update:showFlag", false);
+      }
       this.$router.push({ path: "/whole_zuozhen_list" }).catch(err => err);
     },
     goToCetu() {
+      const path = this.$route.path;
+      if (path === "/login") {
+        this.$emit("update:showFlag", false);
+      }
       this.$router.push({ path: "/whole_cetu_list" });
     },
     goToAsk() {
+      const path = this.$route.path;
+      if (path === "/login") {
+        this.$emit("update:showFlag", false);
+      }
       this.$router.push({ path: "/ask" }).catch(err => err);
     },
     goToVideo() {
@@ -341,24 +358,30 @@ export default {
   .index-btn
     position absolute
     bottom 30px
-    width 230px
-    height 30px
-    left 50%
-    transform translateX(-50%)
-    background rgba(248, 248, 248, 0)
-    border 1px solid $theme-color
-    border-radius 4px
-    line-height 30px
-    font-size 16px
-    display flex
-    align-items center
-    color $theme-color
-    .logo
-      width 20px
-      height 20px
-      margin-left 15px
-      margin-right 5px
-      background url('../../assets/logo.png') no-repeat
-      background-size 100% 100%
-      background-position center
+    left 0
+    right 0
+    text-align center
+    .btn-content
+      display inline-block
+      width auto
+      margin 0 auto
+      background rgb(248, 248, 248)
+      border 1px solid $theme-color
+      border-radius 4px
+      line-height 30px
+      font-size 16px
+      // align-items center
+      padding 0 15px
+      color $theme-color
+      position relative
+      .logo
+        width 20px
+        height 20px
+        margin-right 5px
+        background url('../../assets/logo.png') no-repeat
+        background-size 100% 100%
+        background-position center
+      & > div
+        display inline-block
+        vertical-align middle
 </style>

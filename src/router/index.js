@@ -135,6 +135,13 @@ const routes = [
       import(/*webpackChunkName:"ask_detail" */ "@/views/ask_detail/ask_detail")
   },
   {
+    path: "/base_fram_detail",
+    component: () =>
+      import(
+        /*webpackChunkName:"base_fram_detail" */ "@/views/base_fram_detail/base_fram_detail"
+      )
+  },
+  {
     path: "/cetu_list",
     name: "cetuList",
     component: () =>

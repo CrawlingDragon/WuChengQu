@@ -11,10 +11,10 @@
         <van-image
           class="img"
           fit="contain"
-          @click="goToCenter"
+          @click="goToCenter(item)"
           :src="item.logo"
         ></van-image>
-        <div class="name" @click="goToCenter">
+        <div class="name" @click="goToCenter(item)">
           <div class="center-name">
             {{ item.name }}
           </div>
@@ -31,10 +31,10 @@
       </div>
       <div class="btns van-hairline--top" v-else>
         <div class="btn agree" v-if="item.passed == 1">
-          同意
+          已同意
         </div>
         <div class="btn refuse disbaled" v-if="item.passed == 2">
-          拒绝
+          已拒绝
         </div>
       </div>
     </li>
@@ -48,10 +48,12 @@ import { ref, computed, onMounted, getCurrentInstance } from "vue";
 import { Toast, Dialog } from "vant";
 import { useMeta } from "vue-meta";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const list = ref([]);
 const noData = ref(false);
 const store = useStore();
+const router = useRouter();
 const currentInstance = getCurrentInstance();
 const global = currentInstance.appContext.config.globalProperties;
 useMeta({
@@ -115,8 +117,17 @@ function passedAxiosFn(id, passed) {
       }
     });
 }
-function goToCenter() {
+function goToCenter(item) {
   //去到对应的中心
+
+  store.commit("setMid", item.mid);
+  store.commit("setHospitalName", item.name);
+  store.commit("setHospitalIsStore", item.isstore);
+  setTimeout(() => {
+    router.push({
+      path: "/hospital"
+    });
+  }, 100);
 }
 </script>
 
@@ -131,7 +142,7 @@ function goToCenter() {
       .name
         color #999999 !important
       .agree
-        background #B0DF87 !important
+        background $theme-secondary-color !important
       .refuse
         color #fff !important
         background #B8B8B8 !important
@@ -178,7 +189,6 @@ function goToCenter() {
         text-align center
         border-radius: 4px;
         &.agree
-
           background $theme-color
           color #fff
         &.refuse

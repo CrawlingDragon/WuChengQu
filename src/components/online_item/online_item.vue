@@ -19,7 +19,7 @@
         :key="item"
         @click="preview(list.pic_urls, index)"
       >
-        <van-image class="img" fit="cover" :src="item" lazy-load></van-image>
+        <van-image class="img" fit="cover" :src="item"></van-image>
       </div>
     </div>
 

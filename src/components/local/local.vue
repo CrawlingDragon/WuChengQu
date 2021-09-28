@@ -53,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid"])
+    ...mapState(["token"])
   },
   watch: {},
   mounted() {
@@ -71,11 +71,16 @@ export default {
     },
     async getLocation() {
       let localtionAddress = await geolocation();
+      console.log(localtionAddress);
       let localStatus = storage.session.get("localStatus");
       if (localtionAddress != "定位失败") {
-        this.address = `${localtionAddress.province},${localtionAddress.city},${localtionAddress.district}`;
+        let district = localtionAddress.district
+          ? `,${localtionAddress.district}`
+          : "";
+        let text = `${localtionAddress.province},${localtionAddress.city}${district}`;
+        this.address = text;
         this.addressObj = {
-          text: `${localtionAddress.province},${localtionAddress.city},${localtionAddress.district}`,
+          text: text,
           province: localtionAddress.province, // 省
           city: localtionAddress.city, // 市
           town: localtionAddress.district //区
@@ -199,7 +204,7 @@ export default {
       // eslint-disable-next-line no-debugger
       this.$axios
         .fetchPost("Mobile/User/userCenter", {
-          uId: this.uid,
+          token: this.token,
           mId: this.propMid
         })
         .then(res => {

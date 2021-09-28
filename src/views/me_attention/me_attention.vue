@@ -10,10 +10,13 @@
             <RecommendHospital :list="item"></RecommendHospital>
           </li>
         </ul>
-        <van-empty description="暂无关注医院" v-if="noDataHospital"></van-empty>
+        <van-empty
+          description="暂无关注的中心"
+          v-if="noDataHospital"
+        ></van-empty>
       </van-tab>
       <van-tab title="专家">
-        <ul v-if="!noDataExpert">
+        <ul v-if="!noDataExpert" class="expert-ul">
           <li v-for="item in expertList" :key="item.id">
             <RecommendExpert :list="item"></RecommendExpert>
           </li>
@@ -93,7 +96,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .me_attention-container
-  ul
+  .expert-ul
     column-count 2
     column-gap 0
     padding 12px 0 12px 12px
@@ -105,4 +108,16 @@ export default {
       margin-bottom 12px
       /deep/.join-number
         display none
+  .hospital-ul
+    margin-left: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    li
+      display: inline-block;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      width 50%
+      height: 285px;
+      vertical-align: top;
+      position: relative;
 </style>

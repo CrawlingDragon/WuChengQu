@@ -12,10 +12,10 @@ export async function inToHospitalLocal(defaultCity) {
       if (city != defaultCity) {
         obj = {
           text: defaultCity,
-          axiosText: `浙江省,${defaultCity}`
+          axiosText: `金华市,${defaultCity}`
         };
         Dialog.alert({
-          message: `检测到你的地址不在${defaultCity}，已自动切换至${defaultCity}`,
+          message: `检测到你的地址不在${defaultCity}，已自动切换至金华市${defaultCity}`,
           confirmButtonText: "知道了",
           confirmButtonColor: "#155BBB"
         });
@@ -28,13 +28,13 @@ export async function inToHospitalLocal(defaultCity) {
       storage.session.set("localStatus", obj);
     } else {
       Dialog.alert({
-        message: `定位失败,已自动切换到${defaultCity}`,
+        message: `定位失败,已自动切换到金华市${defaultCity}`,
         confirmButtonText: "知道了",
         confirmButtonColor: "#155BBB"
       });
       obj = {
         text: defaultCity,
-        axiosText: "浙江省," + defaultCity
+        axiosText: "金华市," + defaultCity
       };
       storage.session.set("localStatus", "localFailed");
     }

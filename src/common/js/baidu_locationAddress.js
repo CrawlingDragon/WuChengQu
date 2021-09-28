@@ -19,7 +19,6 @@ export function geolocation() {
     geolocation.getCurrentPosition(function(r) {
       if (this.getStatus() == 0) {
         let address = r.address;
-
         resolve(address);
       } else {
         resolve("定位失败");

@@ -58,7 +58,8 @@ export default {
     return {
       username: "",
       password: "",
-      checked: false
+      checked: false,
+      clickTrue: false
     };
   },
   created() {},

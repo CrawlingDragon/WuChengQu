@@ -122,7 +122,6 @@ export default {
           .confirm({
             message: "抱歉坐诊巡诊是会员服务，请先申请加入医院再访问",
             cancelButtonText: "申请加入会员",
-
             confirmButtonText: "好的",
             cancelButtonColor: "#155BBB",
             confirmButtonColor: "#999"
@@ -220,12 +219,6 @@ export default {
     },
     goToAsk() {
       // 路由 提问
-      if (this.uid == "" || this.uid == undefined) {
-        this.$router.push({
-          path: "/ask"
-        });
-        return;
-      }
       if (this.hospitalIsMember == 0) {
         this.$dialog
           .confirm({
@@ -245,7 +238,9 @@ export default {
             });
           });
       } else {
-        this.$router.push({ path: "/ask" }).catch(err => err);
+        this.$router
+          .push({ path: "/ask", query: { from: "hospital" } })
+          .catch(err => err);
       }
       this.$emit("changeFlag", false);
     },
@@ -393,11 +388,11 @@ export default {
     bottom 40px
     left 0
     right 0
-    color #155BBB
+    color $theme-color
     font-size 14px
     text-align center
     .box
-      border 1px solid #155BBB
+      border 1px solid $theme-color
       border-radius 4px
       display inline-block
       padding 0 10px

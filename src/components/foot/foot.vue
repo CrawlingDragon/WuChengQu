@@ -160,43 +160,43 @@ export default {
     height 25px
   .icon01_active
     background url('./25.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon01_inactive
     background url('./15.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon02_active
     background url('./27.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon02_inactive
     background url('./16.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon03_active
     background url('./29.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon03_inactive
     background url('./17.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon04_active
     background url('./34.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon04_inactive
     background url('./18.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon05_active
     background url('./31.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
   .icon05_inactive
     background url('./19.png') no-repeat
-    background-size cover
+    background-size contain
     background-position center center
 /deep/.van-tabbar-item--active
   color $theme-color

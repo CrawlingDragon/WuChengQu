@@ -15,7 +15,7 @@
     </div>
     <div class="nav-box">
       <router-link to="/index_online" class="item">
-        <div class="icon i5"></div>
+        <div class="icon i1"></div>
         <p>找答案</p>
       </router-link>
       <div class="item">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <router-link to="/into_hospital" class="item">
-        <div class="icon i5"></div>
+        <div class="icon i4"></div>
         <p>找中心</p>
       </router-link>
       <router-link to="/ask" class="item">
@@ -67,7 +67,7 @@ import { useMeta } from "vue-meta";
 import lookForStoreFn from "@/common/js/lookForStore.js";
 export default {
   setup() {
-    const { lookForStore } = lookForStoreFn();
+    const { lookForStore } = lookForStoreFn(process.env.VUE_APP_SHARE_URL);
 
     useMeta({
       title: "为农服务平台"

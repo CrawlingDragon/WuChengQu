@@ -224,7 +224,6 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.scrollHandler);
     this.getExpertData(this.id);
-    // console.log("this.id,this.from :>> ", this.id, this.from);
   },
   unmounted() {
     window.removeEventListener("scroll", this.scrollHandler);
@@ -255,6 +254,7 @@ export default {
             this.expertData = res.data.data;
             this.status = res.data.data.status;
             this.expertid = res.data.data.uid;
+            document.title = this.expertData.name;
             setTimeout(() => {
               this.getIAsked();
               this.getAskMe();
@@ -382,6 +382,13 @@ export default {
           });
       } else {
         //  关注
+        if (!this.token) {
+          // 未登录的情况下，点击关注
+          this.$router.push({
+            path: "/login"
+          });
+          return;
+        }
         this.$axios
           .fetchPost("/Mobile/User/addOrCancelAttention", {
             uId: this.uid,

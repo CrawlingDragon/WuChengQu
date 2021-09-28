@@ -1,8 +1,8 @@
 import axios from "axios";
 import QS from "qs";
 
-// import store from "./store";
-// import router from "./router";
+import store from "./store";
+import router from "./router";
 
 const ERR_OK = 0;
 
@@ -34,11 +34,11 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     //处理响应数据
-    // if (res.data.code == 510) {
-    //   // token过期操作
-    //   store.dispatch("cleanUserInfo");
-    //   router.push({ path: "/login" });
-    // }
+    if (res.data.code == 510) {
+      // token过期操作
+      store.dispatch("cleanUserInfo");
+      router.push({ path: "/login" });
+    }
     if (res.data.success) {
       return Promise.resolve(res);
     }

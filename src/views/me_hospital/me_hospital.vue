@@ -7,7 +7,7 @@
       </li>
     </ul>
     <div class="title" v-show="!noData && initShow">
-      已加入{{ total }}家医院
+      已加入{{ total }}家中心
     </div>
     <van-empty description="您还没有加入过中心" v-if="noData"></van-empty>
   </div>

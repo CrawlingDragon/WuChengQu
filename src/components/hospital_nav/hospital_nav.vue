@@ -34,20 +34,16 @@
         <p>优质基地</p>
       </li> -->
       <li>
-        <a
-          :href="shareUrl + 'Home/Company/companyDetail/ucuid/' + ucuid"
-          target="_blank"
-          style="display:block;color: #AED0FF;"
-        >
+        <div @click="lookForStore">
           <div class="icon icon07"></div>
           <p>农资店铺</p>
-        </a>
+        </div>
       </li>
       <li v-if="hospitalIsStore == 0" @click="goToExpert()">
         <div class="icon icon04"></div>
         <p>专家</p>
       </li>
-      <li @click="goToLive" v-if="hospitalIsStore == 0">
+      <li @click="goToLive" v-if="hospitalIsStore == 0" v-show="false">
         <div class="icon icon12"></div>
         <p>直播</p>
       </li>
@@ -66,10 +62,24 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, useStore } from "vuex";
+import lookForStoreFn from "@/common/js/lookForStore.js";
+import { computed } from "vue";
 export default {
   name: "hospitalNav",
   components: {},
+  setup() {
+    const store = useStore();
+    const ucuid = computed(() => store.state.ucuid);
+    const href =
+      process.env.VUE_APP_SHARE_URL +
+      "Home/Company/companyDetail/ucuid/" +
+      ucuid.value;
+    const { lookForStore } = lookForStoreFn(href);
+    return {
+      lookForStore
+    };
+  },
   props: {
     ismember: {
       type: Number,
@@ -186,7 +196,8 @@ export default {
       // 路由 提问
       if (this.uid == "" || this.uid == undefined) {
         this.$router.push({
-          path: "/ask"
+          path: "/ask",
+          query: { from: "hospital" }
         });
         return;
       }
@@ -307,10 +318,12 @@ export default {
     li
       font-size 12px
       display inline-block
-      color #AED0FF
+      color $theme-color
       width 25%
       margin-top 15px
       text-align center
+      a
+        color $theme-color
       .icon01
         width 25px
         height 25px

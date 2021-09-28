@@ -48,7 +48,7 @@ const defaultCity = "婺城区";
 export default {
   setup() {
     useMeta({
-      title: "进院"
+      title: "中心"
     });
   },
   name: "intoHospital",
@@ -73,9 +73,6 @@ export default {
   created() {},
   mounted() {
     this.getaddress();
-  },
-  updated() {
-    document.title = "进院";
   },
   methods: {
     async getaddress() {

@@ -58,8 +58,7 @@ import { mapState } from "vuex";
 export default {
   name: "crop_record",
   components: {
-    FramItem,
-    [ImagePreview.Component.name]: ImagePreview.Component
+    FramItem
   },
   props: {},
   data() {

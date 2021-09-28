@@ -1,11 +1,7 @@
 <template>
   <div class="message-container">
-    <Header v-if="mid == initMid" :indexHeader="false"></Header>
-    <HospitalHeader
-      v-else
-      indexHeader="indexHeader"
-      navHeader="资讯"
-    ></HospitalHeader>
+    <Header :indexHeader="false"></Header>
+
     <ul class="message-ul">
       <van-list
         v-model:loading="loading"
@@ -27,7 +23,6 @@
 </template>
 <script>
 import Header from "@/components/header/header";
-import HospitalHeader from "@/components/hospital_header/hospital_header";
 import MessageItem from "@/components/message_item/message_item";
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
@@ -40,7 +35,7 @@ export default {
   },
 
   name: "message",
-  components: { Header, MessageItem, HospitalHeader, Foot },
+  components: { Header, MessageItem, Foot },
   props: {},
   data() {
     return {
@@ -67,7 +62,7 @@ export default {
     getList() {
       this.page += 1;
       this.$axios
-        .fetchPost("/Mobile/News/index", { mId: this.mid, page: this.page })
+        .fetchPost("/Mobile/News/index", { mId: this.initMid, page: this.page })
         .then(res => {
           if (res.data.code == 0) {
             this.loading = false;

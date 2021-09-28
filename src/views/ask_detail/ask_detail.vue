@@ -129,7 +129,7 @@
       <div class="border">我来回答</div>
     </div>
     <van-popup
-      v-model="show"
+      v-model:show="show"
       closeable
       close-icon-position="top-left"
       position="bottom"
@@ -153,7 +153,7 @@
       </div>
     </van-popup>
     <van-popup
-      v-model="showRote"
+      v-model:show="showRote"
       position="bottom"
       :style="{ height: '234px' }"
       class="rotes"
@@ -192,7 +192,7 @@ export default {
     });
   },
   name: "askDetail",
-  components: { Header, [ImagePreview.Component.name]: ImagePreview.Component },
+  components: { Header },
   props: {},
   data() {
     return {
@@ -209,7 +209,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["uid", "uid"])
+    ...mapState(["token"])
   },
   created() {},
   watch: {
@@ -226,7 +226,7 @@ export default {
     getDetail() {
       // 解答详情
       this.$axios
-        .fetchPost("Mobile/Wen/detail", { tId: this.tid, uId: this.uid })
+        .fetchPost("Mobile/Wen/detail", { tId: this.tid, token: this.token })
         .then(res => {
           if (res.data.code == 0) {
             this.detail = res.data.data;
@@ -243,7 +243,7 @@ export default {
       }
       this.$axios
         .fetchPost("/Mobile/Wen/addQuestionAnswers", {
-          uId: this.uid,
+          token: this.token,
           content: this.message,
           tId: this.tid
         })
@@ -265,7 +265,7 @@ export default {
       // 发表评级
       this.$axios
         .fetchPost("Mobile/User/pushAppraises", {
-          uId: this.uid, // 用户id
+          token: this.token, // 用户id
           tId: this.tid, //问题id
           pId: this.pid, // 问题pid
           score: this.roteValue, //星级

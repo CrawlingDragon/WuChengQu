@@ -31,7 +31,7 @@
         <div class="left">作物</div>
         <!-- <div class="right" :class="{'location':crop != '请选择'}">{{crop}}</div> -->
         <van-field
-          :value="crop"
+          v-model="crop"
           readonly
           class="right"
           :class="{ location: crop != '请选择' }"
@@ -62,7 +62,7 @@ import Header from "@/components/header/header";
 import HospitalHeader from "@/components/hospital_header/hospital_header";
 import { mapState } from "vuex";
 import Foot from "@/components/foot/foot";
-import EXIF from "exif-js";
+import { exifImg } from "@/common/js/util.js";
 import Loacl from "@/components/local/local";
 import { useMeta } from "vue-meta";
 export default {
@@ -101,7 +101,8 @@ export default {
     },
     localRef() {
       return this.$refs.localRef.addressObj;
-    }
+    },
+    ...mapState(["token"])
   },
   created() {},
   watch: {},
@@ -136,17 +137,12 @@ export default {
       this.fid = crop.fid;
     },
     beforeRead(file) {
-      // console.log('file :>> ', file);
-      let that = this;
+      // 上传图片之前，压缩图片
       return new Promise(resolve => {
-        EXIF.getData(file, function() {
-          let Orientation;
-          Orientation = EXIF.getTag(this, "Orientation");
-          that.imgPress({ file: file, Orientation: Orientation }).then(res => {
-            console.log("file :>> ", res);
-            resolve(res.filePress);
-          });
+        let img = exifImg(file).then(res => {
+          return res;
         });
+        resolve(img);
       });
     },
     afterRead(file, detail) {
@@ -174,8 +170,8 @@ export default {
     },
     subAsk() {
       let obj = {
-        mId: this.mid, //mId
-        uId: this.uid, //用户ID
+        mId: this.from ? this.mid : this.initMid, //mId
+        token: this.token, //用户ID
         content: this.message, //发布内容
         fId: this.fid, //作物ID
         expertId: this.expertId,
@@ -185,8 +181,7 @@ export default {
           this.localRef.province +
           "," +
           this.localRef.city +
-          "," +
-          this.localRef.town
+          (this.localRef.town ? "," + this.localRef.town : "")
       };
       if (this.submitBoolean) {
         this.submitBoolean = false;
@@ -201,132 +196,6 @@ export default {
             this.submitBoolean = true;
           }
         });
-      }
-    },
-    imgPress({
-      file,
-      Orientation,
-      rate = 1,
-      maxSize = 20800,
-      fileType = "file"
-    }) {
-      let that = this;
-      return new Promise(resolve => {
-        // new一个文件读取方法，监听文件读取
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        let img = new Image();
-        reader.onload = function(e) {
-          img.src = e.target.result;
-        };
-        img.onload = function() {
-          let canvas = document.createElement("canvas");
-          // let context = canvas.getContext('2d')
-          // 文件大小KB
-          const fileSizeKB = file.size / 1024;
-          // 配置rate和maxSize的关系
-          if (fileSizeKB * rate > maxSize) {
-            rate = Math.floor((maxSize / fileSizeKB) * 10) / 10;
-          }
-          // 缩放比例，默认0.5
-          // let targetW = canvas.width = this.width * rate
-          // let targetH = canvas.height = this.height * rate
-          // context.clearRect(0, 0, targetW, targetH)
-          // context.drawImage(img, 0, 0, targetW, targetH)
-          let width = this.width;
-          let height = this.height;
-          canvas.width = width;
-          canvas.height = height;
-          if (Orientation && Orientation != 1) {
-            switch (Orientation) {
-              case 6: // 旋转90度
-                canvas.width = this.height;
-                canvas.height = this.width;
-                that.rotateImg(img, "left", canvas, width, height);
-                break;
-              case 3: // 旋转180度
-                that.rotateImg(img, "right2", canvas, width, height);
-                break;
-              case 8: // 旋转-90度
-                that.rotateImg(img, "right2", canvas, width, height);
-                break;
-              default:
-                canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-                break;
-            }
-          } else {
-            canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          }
-
-          if (fileType === "file" || fileType === "blob") {
-            canvas.toBlob(
-              function(blob) {
-                resolve({
-                  filePress:
-                    fileType === "blob"
-                      ? blob
-                      : new File([blob], file.name, { type: file.type }),
-                  base64: img.src
-                });
-              },
-              "image/jpeg",
-              0.4
-            );
-          } else {
-            resolve({
-              filePress:
-                fileType === "base64" ? canvas.toDataURL(file.type) : null,
-              base64: img.src
-            });
-          }
-        };
-      });
-    },
-    rotateImg(img, direction, canvas, width, height) {
-      var min_step = 0;
-      var max_step = 3;
-      if (img == null) {
-        return;
-      }
-      var step = 2;
-      if (step == null) {
-        step = min_step;
-      }
-      if (direction == "right") {
-        step++;
-        step > max_step && (step = min_step);
-      } else if (direction == "right2") {
-        step = 2;
-      } else {
-        step--;
-        step < min_step && (step = max_step);
-      }
-      var degree = (step * 90 * Math.PI) / 180;
-      var ctx = canvas.getContext("2d");
-      switch (step) {
-        case 0:
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-          break;
-        case 1:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(degree);
-          ctx.drawImage(img, 0, -height, width, height);
-          break;
-        case 2:
-          canvas.width = width;
-          canvas.height = height;
-          ctx.rotate(degree);
-          ctx.drawImage(img, -width, -height, width, height);
-          break;
-        case 3:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(degree);
-          ctx.drawImage(img, -width, 0, width, height);
-          break;
       }
     }
   }
